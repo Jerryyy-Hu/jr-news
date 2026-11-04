@@ -1,0 +1,21 @@
+import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const root = fileURLToPath(new URL('../', import.meta.url));
+const dates = (await readdir(path.join(root, 'data'))).filter(name => /^\d{4}-\d{2}-\d{2}\.json$/.test(name)).map(name => name.slice(0, -5)).sort().reverse();
+if (!dates.length) throw new Error('No archived editions found.');
+const next = new Date(dates[0] + 'T12:00:00Z');
+next.setUTCDate(next.getUTCDate() + 1);
+const manifest = {updatedAt: new Date().toISOString(), timezone:'Asia/Shanghai', latestDate:dates[0], dates, nextEdition:next.toISOString().slice(0, 10)};
+await writeFile(path.join(root, 'data/index.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+const editions = Object.fromEntries(await Promise.all(dates.map(async date => [date, JSON.parse(await readFile(path.join(root, 'data', date + '.json'), 'utf8'))])));
+const html = await readFile(path.join(root, 'index.html'), 'utf8');
+const css = await readFile(path.join(root, 'styles.css'), 'utf8');
+const js = await readFile(path.join(root, 'app.js'), 'utf8');
+const bundle = JSON.stringify({manifest, editions}).replaceAll('<', '\\u003c');
+const standalone = html.replace(/<link[^>]*href=["'](?:\.\/)?styles\.css["'][^>]*>/, () => `<style>${css}</style>`).replace(/<script[^>]*src=["'](?:\.\/)?app\.js["'][^>]*><\/script>/, '').replace('</body>', () => `<script>window.__JR_NEWS_BUNDLE__=${bundle};</script><script>${js.replaceAll('</script', '<\\/script')}</script></body>`);
+if (standalone === html || /src=["'](?:\.\/)?app\.js/.test(standalone)) throw new Error('Could not embed app assets.');
+const destination = path.resolve(root, '../JR-News-preview.html');
+await writeFile(destination, standalone, 'utf8');
+console.log(`Updated archive manifest and offline preview: ${dates.length} editions.`);

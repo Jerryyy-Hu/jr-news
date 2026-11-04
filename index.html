@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ec">
+  <meta name="description" content="JR News，每晚22:00的重要金融简报。按日期回看A股、美股与全球消息，用简单的解读学习金融知识。">
+  <title>JR News · 读新闻，懂金融</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#news-list">跳到新闻内容</a>
+  <div class="site-shell">
+    <div class="topline"><span>INDEPENDENT MARKET BRIEF</span><span><i class="schedule-dot" aria-hidden="true"></i> 每晚 22:00 · 北京时间</span></div>
+    <header class="masthead">
+      <a href="#" class="brand" aria-label="JR News 首页">JR News<span>.</span></a>
+      <p class="brand-promise">读懂重要消息<br><strong>也读懂背后的金融逻辑</strong></p>
+      <div class="masthead-edition"><span class="eyebrow">THE DAILY EDITION</span><strong id="header-date">每日金融简报</strong><span id="header-weekday">A股 · 美股 · 全球视野</span></div>
+    </header>
+    <nav class="main-nav" aria-label="主要导航"><div class="view-tabs" role="group" aria-label="阅读视图"><button type="button" data-view="news" aria-pressed="true">每日简报</button><button type="button" data-view="learn" aria-pressed="false">金融知识库 <span aria-hidden="true">↗</span></button></div><span class="nav-caption">从新闻出发，把金融知识连起来。</span></nav>
+    <div id="notice" class="notice" role="status" hidden></div>
+    <div class="workspace">
+      <aside class="archive-sidebar" aria-labelledby="archive-heading">
+        <div class="sidebar-heading"><span class="eyebrow">THE ARCHIVE</span><h2 id="archive-heading">按日期阅读</h2></div>
+        <div id="archive-dates" class="archive-dates"><span class="muted">正在载入归档…</span></div>
+        <div class="archive-footnote"><span class="small-rule"></span><p id="next-edition">每日 22:00 汇编</p><p>以截止时点为准<br>保留每一天的市场线索</p></div>
+        <a class="sidebar-help" href="#reading-guide">第一次读财经新闻？<span>先看看阅读方法 ↓</span></a>
+      </aside>
+      <main id="main-content">
+        <section id="news-view" aria-label="每日新闻简报">
+          <div class="edition-heading"><div><p class="eyebrow">YOUR MARKET NOTEBOOK</p><h1 id="edition-title">今天，市场在关注什么？</h1><p id="edition-window" class="edition-window">正在载入每日简报…</p></div><div class="date-arrows" role="group" aria-label="切换简报日期"><button id="previous-date" type="button" aria-label="阅读前一天的简报" disabled>←</button><button id="next-date" type="button" aria-label="阅读后一天的简报" disabled>→</button></div></div>
+          <section class="outlook" aria-labelledby="outlook-label"><div class="outlook-caption"><span class="outlook-symbol" aria-hidden="true">↗</span><div><span class="eyebrow">THE BIG PICTURE</span><h2 id="outlook-label">一句话，读懂今日风向</h2></div></div><p id="outlook-text">重要消息正在整理中。</p><div class="outlook-foot"><span>基于本期消息的综合判断</span><span>影响方向 ≠ 涨跌承诺</span></div></section>
+          <div class="reading-toolbar"><div class="category-filters" role="group" aria-label="按影响方向筛选"><button type="button" data-category="all" aria-pressed="true">全部 <span id="count-all">—</span></button><button type="button" data-category="positive" aria-pressed="false"><i class="category-dot positive" aria-hidden="true"></i>利好 <span id="count-positive">—</span></button><button type="button" data-category="negative" aria-pressed="false"><i class="category-dot negative" aria-hidden="true"></i>负面 <span id="count-negative">—</span></button><button type="button" data-category="neutral" aria-pressed="false"><i class="category-dot neutral" aria-hidden="true"></i>中立 <span id="count-neutral">—</span></button></div><button id="expand-lessons" class="text-button" type="button" aria-pressed="false">展开全部知识讲解 <span aria-hidden="true">＋</span></button></div>
+          <form id="search-form" class="search-toolbar" role="search"><label class="search-field"><span class="visually-hidden">搜索新闻与金融知识</span><span aria-hidden="true">⌕</span><input id="news-search" type="search" placeholder="搜索事件、公司或金融名词…" autocomplete="off"></label><label class="select-field"><span class="visually-hidden">选择影响市场</span><select id="market-filter"><option value="all">全部市场</option><option value="A股">A股</option><option value="美股">美股</option></select></label><label class="archive-search"><input id="search-all-dates" type="checkbox"><span>搜索全部日期</span></label></form>
+          <div class="results-row"><p id="results-status" role="status" aria-live="polite">正在核对归档…</p><button id="clear-filters" class="text-button" type="button" hidden>清除筛选</button></div>
+          <div id="loading" class="loading-state" aria-label="正在加载"><span class="loading-line"></span><span class="loading-line"></span><span class="loading-line short"></span></div>
+          <div id="news-list" tabindex="-1"></div>
+          <div id="empty-state" class="empty-state" hidden><span aria-hidden="true">⌕</span><h2>暂时没有匹配的消息</h2><p>试试更短的关键词，或打开「搜索全部日期」。</p><button id="empty-reset" class="solid-button" type="button">重置筛选</button></div>
+          <aside id="coverage" class="coverage" hidden><span class="eyebrow">EDITOR'S NOTE</span><h2>这期简报的时间与范围</h2><p id="coverage-text"></p><p id="backfill-note"></p></aside>
+        </section>
+        <section id="learn-view" aria-labelledby="learn-title" hidden><p class="eyebrow">LEARN AS YOU READ</p><h1 id="learn-title">把金融名词，变成常识。</h1><p class="learn-intro">这里的每个概念，都来自一条真实新闻。先看含义，再看例子，最后回到事件里理解它的作用。</p><label class="glossary-search"><span>查找知识点</span><input id="glossary-search" type="search" placeholder="例如：利率、流动性、回购…" autocomplete="off"></label><p id="glossary-status" class="muted" role="status" aria-live="polite"></p><div id="glossary-list" class="glossary-list"></div></section>
+        <section class="reading-guide" id="reading-guide" aria-labelledby="guide-title"><div><span class="eyebrow">A SMALL READING GUIDE</span><h2 id="guide-title">读一条新闻，问三个问题。</h2></div><ol><li><strong>发生了什么？</strong><span>先区分事实、计划和市场猜测。</span></li><li><strong>通过什么影响市场？</strong><span>看它改变了盈利、资金成本，还是情绪。</span></li><li><strong>下一步如何验证？</strong><span>用后续数据检验判断，而不是只盯一天涨跌。</span></li></ol></section>
+      </main>
+    </div>
+    <footer class="site-footer"><div><a class="footer-brand" href="#">JR News<span>.</span></a><p>少一点噪音，多一点理解。</p></div><div><p>重要金融消息 · 简单解释 · 每日归档</p><p>来源附于每条新闻下方，解读为条件性分析。</p><p id="updated-at">所有时间均为北京时间（UTC+8）</p></div><a href="#" class="back-top" aria-label="返回页面顶部">回到顶部 ↑</a></footer>
+  </div>
+  <noscript><p class="noscript-message">请启用 JavaScript 以读取日期归档与新闻解读。</p></noscript>
+</body>
+</html>
