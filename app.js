@@ -51,7 +51,7 @@ async function fetchJson(path) {
 
 function buildArchive() {
   const fragment = document.createDocumentFragment();
-  for (const date of state.manifest.dates) {
+  for (const date of [...state.manifest.dates].reverse()) {
     const edition = state.editions.get(date);
     const button = createElement("button", "date-button");
     button.type = "button";
@@ -67,7 +67,35 @@ function buildArchive() {
     button.addEventListener("click", () => selectDate(date));
     fragment.append(button);
   }
-  byId("archive-dates").replaceChildren(fragment);
+  const archive = byId("archive-dates");
+  archive.replaceChildren(fragment);
+  archive.addEventListener("scroll", updateArchiveFades, {passive: true});
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(() => revealArchiveDate()).observe(archive);
+  } else {
+    window.addEventListener("resize", () => revealArchiveDate());
+  }
+}
+
+function updateArchiveFades() {
+  const archive = byId("archive-dates");
+  const maxScroll = archive.scrollWidth - archive.clientWidth;
+  archive.classList.toggle("has-overflow-before", maxScroll > 1 && archive.scrollLeft > 1);
+  archive.classList.toggle("has-overflow-after", maxScroll > 1 && archive.scrollLeft < maxScroll - 1);
+}
+
+function revealArchiveDate(smooth = false) {
+  const archive = byId("archive-dates");
+  const selected = archive.querySelector('[aria-current="date"]');
+  const maxScroll = archive.scrollWidth - archive.clientWidth;
+  if (selected && maxScroll > 1) {
+    const target = selected.offsetLeft - (archive.clientWidth - selected.offsetWidth) / 2;
+    archive.scrollTo({
+      left: Math.max(0, Math.min(maxScroll, target)),
+      behavior: smooth && !window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "instant"
+    });
+  }
+  updateArchiveFades();
 }
 
 function selectDate(date, article = null) {
@@ -78,7 +106,7 @@ function selectDate(date, article = null) {
   byId("search-all-dates").checked = false;
   setView("news", false);
   setHash(date, article);
-  renderEdition();
+  renderEdition(true);
   if (article) focusArticle(article);
 }
 
@@ -91,7 +119,7 @@ function setView(view, updateHash = true) {
   if (updateHash) setHash(state.date, null, view);
 }
 
-function renderEdition() {
+function renderEdition(smoothArchive = false) {
   const edition = state.editions.get(state.date);
   if (!edition) return;
   byId("header-date").textContent = state.date.replaceAll("-", ".");
@@ -110,6 +138,7 @@ function renderEdition() {
   const index = available.indexOf(state.date);
   byId("previous-date").disabled = index === available.length - 1;
   byId("next-date").disabled = index <= 0;
+  revealArchiveDate(smoothArchive);
   renderNews();
 }
 
