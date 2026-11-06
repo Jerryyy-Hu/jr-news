@@ -4,32 +4,11 @@ const CATEGORY_LABELS = {positive: "利好", negative: "负面", neutral: "中�
 const state = {manifest: null, editions: new Map(), date: "", category: "all", market: "all", query: "", allDates: false, expanded: false, view: "news"};
 const byId = id => document.getElementById(id);
 const dayFormatter = new Intl.DateTimeFormat("zh-CN", {timeZone: "Asia/Shanghai", weekday: "long"});
-const refreshAnimations = new Map();
 
 function canAnimate() {
   return document.documentElement.dataset.input !== "keyboard" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function stopRefreshAnimations() {
-  for (const animation of refreshAnimations.values()) animation.cancel();
-  refreshAnimations.clear();
-}
-
-function animateRefresh(node) {
-  if (!node?.animate || !canAnimate()) return;
-  const tokens = getComputedStyle(document.documentElement);
-  const duration = parseFloat(tokens.getPropertyValue("--motion-change"));
-  const easing = tokens.getPropertyValue("--ease-out").trim();
-  if (!duration || !easing) return;
-  const previous = refreshAnimations.get(node);
-  const opacity = previous ? getComputedStyle(node).opacity : 0.82;
-  previous?.cancel();
-  const animation = node.animate([{opacity}, {opacity: 1}], {duration, easing});
-  refreshAnimations.set(node, animation);
-  animation.onfinish = () => {
-    if (refreshAnimations.get(node) === animation) refreshAnimations.delete(node);
-  };
-}
 const TERM_ALIASES = {
   "供需与产量配额": ["供需", "产量配额", "减产"],
   "结构性再贷款": ["再贷款"],
@@ -194,11 +173,15 @@ function createTermText(tag, className, text, item = null, seen = new Set(), hig
   return node;
 }
 
+function termDomId(prefix, term) {
+  return `${prefix}-${encodeURIComponent(term)}`;
+}
+
 function focusGlossaryTerm(term) {
   requestAnimationFrame(() => {
-    const card = document.getElementById(`glossary-${term}`);
+    const card = document.getElementById(termDomId("glossary", term));
     if (!card) return;
-    card.classList.add("flash-card");
+    card.classList.add("located-card");
     card.focus({preventScroll: true});
     card.scrollIntoView({block: "start", behavior: canAnimate() ? "smooth" : "auto"});
   });
@@ -282,6 +265,13 @@ function revealArchiveDate(smooth = false) {
       behavior: smooth && canAnimate() ? "smooth" : "instant"
     });
   }
+  if (selected && !window.matchMedia("(max-width: 760px)").matches) {
+    const top = selected.offsetTop;
+    const bottom = top + selected.offsetHeight;
+    if (top < archive.scrollTop || bottom > archive.scrollTop + archive.clientHeight) {
+      archive.scrollTo({top: Math.max(0, top - (archive.clientHeight - selected.offsetHeight) / 2), behavior: "instant"});
+    }
+  }
   updateArchiveFades();
 }
 
@@ -299,14 +289,12 @@ function selectDate(date, article = null, push = false) {
 }
 
 function setView(view, updateHash = true) {
-  const changed = state.view !== view;
   state.view = view;
   byId("news-view").hidden = view !== "news";
   byId("learn-view").hidden = view !== "learn";
   for (const button of document.querySelectorAll("[data-view]")) button.setAttribute("aria-pressed", String(button.dataset.view === view));
   if (view === "learn") renderGlossary();
   if (updateHash) setHash(state.date, null, view);
-  if (changed) animateRefresh(byId(`${view}-view`));
 }
 
 function renderEdition(smoothArchive = false) {
@@ -329,8 +317,7 @@ function renderEdition(smoothArchive = false) {
   byId("previous-date").disabled = index === available.length - 1;
   byId("next-date").disabled = index <= 0;
   revealArchiveDate(smoothArchive);
-  renderNews(smoothArchive);
-  if (smoothArchive) animateRefresh(document.querySelector(".outlook"));
+  renderNews();
 }
 
 function searchableText(item) {
@@ -422,15 +409,14 @@ function createNewsCard(item, edition, index) {
   permalink.addEventListener("click", () => {
     setHash(edition.date, item.id);
     permalink.textContent = "地址已定位 ✓";
-    article.classList.remove("flash-card");
-    requestAnimationFrame(() => article.classList.add("flash-card"));
+    article.classList.add("located-card");
   });
   bottom.append(sources, permalink);
   article.append(bottom);
   return article;
 }
 
-function renderNews(animate = false) {
+function renderNews() {
   const groups = getFilteredGroups();
   const fragment = document.createDocumentFragment();
   let total = 0;
@@ -453,7 +439,6 @@ function renderNews(animate = false) {
   byId("results-status").textContent = `${state.allDates ? "全部日期" : "本期简报"} · 显示 ${total} 条消息${state.allDates ? ` / ${groups.length} 个日期` : ""}`;
   byId("clear-filters").hidden = state.category === "all" && state.market === "all" && !state.query && !state.allDates;
   for (const button of document.querySelectorAll("[data-category]")) button.setAttribute("aria-pressed", String(button.dataset.category === state.category));
-  if (animate) animateRefresh(byId("news-list"));
 }
 
 function renderGlossary() {
@@ -462,11 +447,11 @@ function renderGlossary() {
   const fragment = document.createDocumentFragment();
   entries.forEach(({knowledge, stories}, index) => {
     const card = createElement("article", "glossary-card");
-    card.id = `glossary-${knowledge.term}`;
+    card.id = termDomId("glossary", knowledge.term);
     card.tabIndex = -1;
-    card.setAttribute("aria-labelledby", `term-heading-${knowledge.term}`);
+    card.setAttribute("aria-labelledby", termDomId("term-heading", knowledge.term));
     card.append(createElement("span", "eyebrow", "A CONCEPT FROM THE NEWS"), createElement("h2", "", knowledge.term), createElement("p", "", knowledge.explanation));
-    card.querySelector("h2").id = `term-heading-${knowledge.term}`;
+    card.querySelector("h2").id = termDomId("term-heading", knowledge.term);
     if (knowledge.example) card.append(createElement("p", "example", knowledge.example));
     const examples = createElement("div", "concept-stories");
     examples.append(createElement("h3", "", `在新闻中看实例 · ${stories.size} 条`));
@@ -498,7 +483,7 @@ function resetFilters(shouldRender = true) {
   byId("news-search").value = "";
   byId("market-filter").value = "all";
   byId("search-all-dates").checked = false;
-  if (shouldRender) renderNews(true);
+  if (shouldRender) renderNews();
 }
 
 function focusArticle(id) {
@@ -508,7 +493,7 @@ function focusArticle(id) {
     if (!article) return;
     const toggle = article.querySelector(".lesson-toggle");
     if (toggle) setLessonOpen(toggle, byId(toggle.getAttribute("aria-controls")), true);
-    article.classList.add("flash-card");
+    article.classList.add("located-card");
     article.setAttribute("tabindex", "-1");
     article.focus({preventScroll: true});
     article.scrollIntoView({block: "start", behavior: canAnimate() ? "smooth" : "auto"});
@@ -519,15 +504,13 @@ function bindControls() {
   document.addEventListener("pointerdown", () => {document.documentElement.dataset.input = "pointer";}, {capture: true, passive: true});
   document.addEventListener("keydown", () => {
     document.documentElement.dataset.input = "keyboard";
-    stopRefreshAnimations();
   }, {capture: true});
-  window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", stopRefreshAnimations);
   for (const button of document.querySelectorAll("[data-view]")) button.addEventListener("click", () => setView(button.dataset.view));
-  for (const button of document.querySelectorAll("[data-category]")) button.addEventListener("click", () => {state.category = button.dataset.category; renderNews(true);});
+  for (const button of document.querySelectorAll("[data-category]")) button.addEventListener("click", () => {state.category = button.dataset.category; renderNews();});
   byId("search-form").addEventListener("submit", event => event.preventDefault());
   byId("news-search").addEventListener("input", event => {state.query = event.target.value; renderNews();});
-  byId("market-filter").addEventListener("change", event => {state.market = event.target.value; renderNews(true);});
-  byId("search-all-dates").addEventListener("change", event => {state.allDates = event.target.checked; renderNews(true);});
+  byId("market-filter").addEventListener("change", event => {state.market = event.target.value; renderNews();});
+  byId("search-all-dates").addEventListener("change", event => {state.allDates = event.target.checked; renderNews();});
   byId("glossary-search").addEventListener("input", renderGlossary);
   byId("clear-filters").addEventListener("click", () => resetFilters());
   byId("empty-reset").addEventListener("click", () => resetFilters());

@@ -77,6 +77,14 @@ The user authorized GitHub publication and subsequent scheduled updates on Novem
 
 If publication time is unavailable, use a verified `eventAt` timestamp or an explicit approximate `eventDate` plus a time-zone explanation. Mark search-only verification honestly. Source pages may change; preserve verified values in the edition rather than silently replacing history.
 
+## Frontend interaction and accessibility
+
+News summaries use 15px type and explanations use 14px type, with larger secondary labels. Touch search/select inputs use at least 16px and retain browser zoom. Long financial text and source names wrap in full. Safe-area padding supports edge-to-edge mobile browsers without blocking native document or archive scrolling.
+
+Desktop dates remain newest first and use a bounded native vertical scroller as the archive grows; mobile dates remain oldest left, newest right with native horizontal scrolling and conditional edge fades. Changing the breakpoint preserves the selected date and keyboard focus. Glossary heading IDs encode spaces and punctuation while shareable hashes keep the original term.
+
+Financial content changes immediately. Motion is limited to interruptible date/tab indicators, press feedback and the lesson icon (140–200ms, existing tokens). Lesson content expands immediately, and location feedback uses a static outline. Keyboard input and reduced-motion preferences disable animation; hover feedback requires a fine pointer with hover capability. Real-device touch and visual regression checks remain separate from offline DOM contract checks.
+
 ## Deployment
 
 GitHub Pages publishes the root of `main`. `.nojekyll` keeps these static assets unchanged. Do not commit the old `dist/` draft, workspace handoffs, credentials, personal data, or the generated offline preview. There are no external fonts, analytics, or runtime financial-data credentials.
