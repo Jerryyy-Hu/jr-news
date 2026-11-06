@@ -8,6 +8,8 @@ Each edition covers `(previous day 22:00, edition day 22:00]` in `Asia/Shanghai`
 
 The site supports date navigation, direct article links, category and market filters, archive search, and a glossary derived from the news. Each article contains a one-sentence event/impact summary, visible analysis, a plain-language concept and example, follow-up observations, caveats, and source links. Market impacts are editorial inferences, not guaranteed price movements.
 
+Financial terms in article text are bold purple links to a focused glossary entry. Each entry lists all related news examples across dates; following an example clears news filters and opens that article's lesson. Term links support direct URLs, browser Back/Forward, keyboard navigation, and opening in a new tab. Matching uses the longest known label first and preserves plain text safely. New lessons are indexed automatically from `knowledge.term`; optional `knowledge.aliases` can supply specific alternative labels that the lesson actually explains. Keep aliases precise and avoid generic words with unrelated meanings.
+
 ## Local preview
 
 No dependencies or build framework are required. From the project directory:

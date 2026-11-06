@@ -4,6 +4,25 @@ const CATEGORY_LABELS = {positive: "利好", negative: "负面", neutral: "中�
 const state = {manifest: null, editions: new Map(), date: "", category: "all", market: "all", query: "", allDates: false, expanded: false, view: "news"};
 const byId = id => document.getElementById(id);
 const dayFormatter = new Intl.DateTimeFormat("zh-CN", {timeZone: "Asia/Shanghai", weekday: "long"});
+const TERM_ALIASES = {
+  "供需与产量配额": ["供需", "产量配额", "减产"],
+  "结构性再贷款": ["再贷款"],
+  "杠杆与保证金": ["杠杆", "保证金", "融资保证金"],
+  "全股票收购与企业价值": ["全股票收购", "企业价值"],
+  "基点与估值折现": ["基点", "折现", "折现率"],
+  "投放、到期与净投放": ["净投放", "资金投放"],
+  "JOLTS与利率预期": ["JOLTS", "利率", "利率预期"],
+  "ADP与“超预期”": ["ADP", "超预期"],
+  "基点与通胀的二次传导": ["通胀", "二次传导"],
+  "原油风险溢价与预期定价": ["原油风险溢价", "预期定价"],
+  "初请、续请与存量流量": ["初请", "续请", "存量", "流量"],
+  "非农就业与失业率的统计口径": ["非农就业", "非农", "失业率"],
+  "库存可用天数与供应缓冲": ["库存可用天数", "可用天数", "供应缓冲"],
+  "回购授权与每股收益": ["股票回购授权", "股票回购", "回购授权", "每股收益", "回购"]
+};
+let glossaryEntries = [];
+let termTargets = new Map();
+let termPattern = null;
 
 function createElement(tag, className, text) {
   const node = document.createElement(tag);
@@ -27,15 +46,110 @@ function formatWindow(edition) {
 
 function getHashState() {
   const params = new URLSearchParams(window.location.hash.slice(1));
-  return {date: params.get("date"), article: params.get("article"), view: params.get("view")};
+  return {date: params.get("date"), article: params.get("article"), view: params.get("view"), term: params.get("term")};
 }
 
-function setHash(date, article = null, view = "news") {
+function setHash(date, article = null, view = "news", term = null, push = false) {
   const params = new URLSearchParams();
   if (date) params.set("date", date);
   if (article) params.set("article", article);
   if (view === "learn") params.set("view", "learn");
-  history.replaceState(null, "", `${window.location.pathname}${window.location.search}#${params}`);
+  if (term) params.set("term", term);
+  history[push ? "pushState" : "replaceState"](null, "", `${window.location.pathname}${window.location.search}#${params}`);
+}
+
+function knowledgeAliases(knowledge) {
+  return [...new Set([knowledge.term, ...knowledge.term.split(/[与、]/u), ...(TERM_ALIASES[knowledge.term] || []), ...(knowledge.aliases || [])])]
+    .map(term => term.trim()).filter(term => term.length >= 2);
+}
+
+function buildGlossaryIndex() {
+  const entries = new Map();
+  for (const date of state.manifest.dates) {
+    for (const item of state.editions.get(date)?.items || []) {
+      if (!item.knowledge?.term) continue;
+      const term = item.knowledge.term;
+      if (!entries.has(term)) entries.set(term, {knowledge: item.knowledge, aliases: new Set(), stories: new Map()});
+      const entry = entries.get(term);
+      knowledgeAliases(item.knowledge).forEach(alias => entry.aliases.add(alias));
+      entry.stories.set(item.id, {date, item});
+    }
+  }
+  glossaryEntries = [...entries.values()];
+  termTargets = new Map(glossaryEntries.map(entry => [entry.knowledge.term.toLocaleLowerCase(), entry]));
+  for (const entry of glossaryEntries) {
+    for (const alias of entry.aliases) {
+      if (!termTargets.has(alias.toLocaleLowerCase())) termTargets.set(alias.toLocaleLowerCase(), entry);
+    }
+  }
+  const labels = [...termTargets.keys()].sort((a, b) => b.length - a.length);
+  termPattern = labels.length ? new RegExp(labels.map(label => label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "giu") : null;
+  for (const date of state.manifest.dates) {
+    for (const item of state.editions.get(date)?.items || []) {
+      for (const match of findTerms(articleText(item), item)) match.entry.stories.set(item.id, {date, item});
+    }
+  }
+}
+
+function articleText(item) {
+  return [item.title, item.summary, item.analysis, item.knowledge?.explanation, item.knowledge?.example, item.watch, item.caveat].filter(Boolean).join(" ");
+}
+
+function findTerms(text, item = null) {
+  if (!termPattern) return [];
+  termPattern.lastIndex = 0;
+  const ownAliases = item?.knowledge ? knowledgeAliases(item.knowledge).map(alias => alias.toLocaleLowerCase()) : [];
+  return [...text.matchAll(termPattern)].filter(match => {
+    if (!/^[a-z0-9]/i.test(match[0])) return true;
+    return !/[a-z0-9]/i.test(text[match.index - 1] || "") && !/[a-z0-9]/i.test(text[match.index + match[0].length] || "");
+  }).map(match => ({text: match[0], index: match.index, entry: ownAliases.includes(match[0].toLocaleLowerCase())
+    ? termTargets.get(item.knowledge.term.toLocaleLowerCase()) : termTargets.get(match[0].toLocaleLowerCase())}));
+}
+
+function glossaryHref(term) {
+  return `#${new URLSearchParams({date: state.date, view: "learn", term})}`;
+}
+
+function handleInternalLink(event, navigate) {
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  navigate();
+}
+
+function createTermText(tag, className, text, item = null) {
+  const node = createElement(tag, className);
+  let cursor = 0;
+  for (const match of findTerms(text, item)) {
+    node.append(document.createTextNode(text.slice(cursor, match.index)));
+    const link = createElement("a", "term-link");
+    const term = match.entry.knowledge.term;
+    link.href = glossaryHref(term);
+    link.title = `查看金融知识：${term}`;
+    link.setAttribute("aria-label", `${match.text}，查看金融知识库：${term}`);
+    link.append(createElement("strong", "", match.text));
+    link.addEventListener("click", event => handleInternalLink(event, () => openGlossaryTerm(term)));
+    node.append(link);
+    cursor = match.index + match.text.length;
+  }
+  node.append(document.createTextNode(text.slice(cursor)));
+  return node;
+}
+
+function focusGlossaryTerm(term) {
+  requestAnimationFrame(() => {
+    const card = document.getElementById(`glossary-${term}`);
+    if (!card) return;
+    card.classList.add("flash-card");
+    card.focus({preventScroll: true});
+    card.scrollIntoView({block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  });
+}
+
+function openGlossaryTerm(term) {
+  byId("glossary-search").value = "";
+  setView("learn", false);
+  setHash(state.date, null, "learn", term, true);
+  focusGlossaryTerm(term);
 }
 
 function showNotice(message) {
@@ -98,14 +212,14 @@ function revealArchiveDate(smooth = false) {
   updateArchiveFades();
 }
 
-function selectDate(date, article = null) {
+function selectDate(date, article = null, push = false) {
   if (!state.editions.has(date)) return;
   if (article) resetFilters(false);
   state.date = date;
   state.allDates = false;
   byId("search-all-dates").checked = false;
   setView("news", false);
-  setHash(date, article);
+  setHash(date, article, "news", null, push);
   renderEdition(true);
   if (article) focusArticle(article);
 }
@@ -126,7 +240,7 @@ function renderEdition(smoothArchive = false) {
   byId("header-weekday").textContent = `${dayFormatter.format(new Date(`${state.date}T12:00:00+08:00`))} · 每日金融简报`;
   byId("edition-title").textContent = `${formatDate(state.date)}，市场在关注什么？`;
   byId("edition-window").textContent = formatWindow(edition);
-  byId("outlook-text").textContent = edition.outlook;
+  byId("outlook-text").replaceChildren(...createTermText("span", "", edition.outlook).childNodes);
   byId("coverage-text").textContent = edition.coverageNote || "新闻按公开发布时间纳入本期，市场影响为分析判断。";
   byId("backfill-note").textContent = edition.backfilled ? "本期为历史补录：按当时已公开的信息整理；后续结果不倒填为当日已知事实。" : "消息按截止时点整理，已发生的市场表现与后续可能影响分别说明。";
   byId("coverage").hidden = false;
@@ -172,10 +286,10 @@ function createNewsCard(item, edition, index) {
   tags.append(createElement("span", "sentiment", CATEGORY_LABELS[item.category] || "中立"), createElement("span", "market-tag", (item.markets || []).join(" / ")), createElement("span", "", item.topic));
   meta.append(tags, createElement("span", "news-time", item.timeLabel || formatDate(edition.date)));
   const titleRow = createElement("div", "news-title-row");
-  titleRow.append(createElement("span", "article-number", String(index + 1).padStart(2, "0")), createElement("h3", "", item.title));
+  titleRow.append(createElement("span", "article-number", String(index + 1).padStart(2, "0")), createTermText("h3", "", item.title, item));
   const analysis = createElement("div", "analysis");
-  analysis.append(createElement("span", "analysis-label", "为什么重要 · 简单解读"), createElement("p", "", item.analysis));
-  article.append(meta, titleRow, createElement("p", "news-summary", item.summary), analysis);
+  analysis.append(createElement("span", "analysis-label", "为什么重要 · 简单解读"), createTermText("p", "", item.analysis, item));
+  article.append(meta, titleRow, createTermText("p", "news-summary", item.summary, item), analysis);
   if (item.knowledge?.term) {
     const lessonId = `lesson-${edition.date}-${item.id}`;
     const toggle = createElement("button", "lesson-toggle");
@@ -187,14 +301,18 @@ function createNewsCard(item, edition, index) {
     panel.id = lessonId;
     const inner = createElement("div", "lesson-inner");
     const lesson = createElement("div", "lesson-content");
-    lesson.append(createElement("p", "", item.knowledge.explanation));
-    if (item.knowledge.example) lesson.append(createElement("p", "example", `举个例子：${item.knowledge.example}`));
+    lesson.append(createTermText("p", "", item.knowledge.explanation, item));
+    if (item.knowledge.example) lesson.append(createTermText("p", "example", `举个例子：${item.knowledge.example}`, item));
+    const conceptLink = createElement("a", "lesson-glossary-link", `在金融知识库中查看「${item.knowledge.term}」 ↗`);
+    conceptLink.href = glossaryHref(item.knowledge.term);
+    conceptLink.addEventListener("click", event => handleInternalLink(event, () => openGlossaryTerm(item.knowledge.term)));
+    lesson.append(conceptLink);
     if (item.watch) {
       const watch = createElement("p", "watch");
-      watch.append(createElement("strong", "", "接下来观察"), createElement("span", "", item.watch));
+      watch.append(createElement("strong", "", "接下来观察"), createTermText("span", "", item.watch, item));
       lesson.append(watch);
     }
-    if (item.caveat) lesson.append(createElement("p", "caveat", `判断边界：${item.caveat}`));
+    if (item.caveat) lesson.append(createTermText("p", "caveat", `判断边界：${item.caveat}`, item));
     inner.append(lesson);
     panel.append(inner);
     setLessonOpen(toggle, panel, state.expanded);
@@ -260,37 +378,35 @@ function renderNews() {
 }
 
 function renderGlossary() {
-  const seen = new Set();
-  const entries = [];
   const query = byId("glossary-search").value.trim().toLocaleLowerCase();
-  for (const date of state.manifest.dates) {
-    for (const item of state.editions.get(date)?.items || []) {
-      const knowledge = item.knowledge;
-      if (!knowledge?.term || seen.has(knowledge.term)) continue;
-      seen.add(knowledge.term);
-      if (query && ![knowledge.term, knowledge.explanation, knowledge.example].join(" ").toLocaleLowerCase().includes(query)) continue;
-      entries.push({date, item, knowledge});
-    }
-  }
+  const entries = glossaryEntries.filter(({knowledge, aliases}) => !query || [knowledge.term, knowledge.explanation, knowledge.example, ...aliases].join(" ").toLocaleLowerCase().includes(query));
   const fragment = document.createDocumentFragment();
-  entries.forEach(({date, item, knowledge}, index) => {
+  entries.forEach(({knowledge, stories}, index) => {
     const card = createElement("article", "glossary-card enter-card");
+    card.id = `glossary-${knowledge.term}`;
+    card.tabIndex = -1;
+    card.setAttribute("aria-labelledby", `term-heading-${knowledge.term}`);
     card.style.setProperty("--delay", `${Math.min(index, 5) * 35}ms`);
     card.append(createElement("span", "eyebrow", "A CONCEPT FROM THE NEWS"), createElement("h2", "", knowledge.term), createElement("p", "", knowledge.explanation));
+    card.querySelector("h2").id = `term-heading-${knowledge.term}`;
     if (knowledge.example) card.append(createElement("p", "example", knowledge.example));
-    const related = createElement("button", "related-story", `${formatDate(date)} · ${item.title} ↗`);
-    related.type = "button";
-    related.addEventListener("click", () => {
-      resetFilters(false);
-      state.expanded = true;
-      syncExpandButton();
-      selectDate(date, item.id);
-    });
-    card.append(related);
+    const examples = createElement("div", "concept-stories");
+    examples.append(createElement("h3", "", `在新闻中看实例 · ${stories.size} 条`));
+    const list = createElement("ul", "concept-story-list");
+    for (const {date, item} of [...stories.values()].sort((a, b) => b.date.localeCompare(a.date))) {
+      const related = createElement("a", "related-story", `${formatDate(date, true)} · ${item.title} ↗`);
+      related.href = `#${new URLSearchParams({date, article: item.id})}`;
+      related.addEventListener("click", event => handleInternalLink(event, () => selectDate(date, item.id, true)));
+      const row = createElement("li", "");
+      row.append(related);
+      list.append(row);
+    }
+    examples.append(list);
+    card.append(examples);
     fragment.append(card);
   });
   byId("glossary-list").replaceChildren(fragment);
-  byId("glossary-status").textContent = entries.length ? `共 ${entries.length} 个知识点 · 点击相关新闻，可以回到实际案例。` : "没有匹配的知识点，请换一个关键词。";
+  byId("glossary-status").textContent = entries.length ? `共 ${entries.length} 个知识点 · 词条下可跳转全部相关新闻实例。` : "没有匹配的知识点，请换一个关键词。";
 }
 
 function syncExpandButton() {
@@ -312,6 +428,8 @@ function focusArticle(id) {
     const edition = state.editions.get(state.date);
     const article = document.getElementById(`article-${edition.date}-${id}`);
     if (!article) return;
+    const toggle = article.querySelector(".lesson-toggle");
+    if (toggle) setLessonOpen(toggle, byId(toggle.getAttribute("aria-controls")), true);
     article.classList.add("flash-card");
     article.setAttribute("tabindex", "-1");
     article.focus({preventScroll: true});
@@ -351,8 +469,17 @@ function bindControls() {
   });
   window.addEventListener("hashchange", () => {
     const hash = getHashState();
-    if (hash.date && state.editions.has(hash.date)) selectDate(hash.date, hash.article);
-    if (hash.view === "learn") setView("learn", false);
+    if (hash.date && state.editions.has(hash.date)) state.date = hash.date;
+    if (hash.article) resetFilters(false);
+    renderEdition();
+    if (hash.view === "learn") {
+      if (hash.term) byId("glossary-search").value = "";
+      setView("learn", false);
+      if (hash.term) focusGlossaryTerm(hash.term);
+    } else {
+      setView("news", false);
+      if (hash.article) focusArticle(hash.article);
+    }
   });
 }
 
@@ -372,6 +499,7 @@ async function initialize() {
     if (failures) showNotice(`有 ${failures} 期简报暂时无法载入，当前显示已成功读取的内容；可以稍后刷新重试。`);
     const hash = getHashState();
     state.date = state.editions.has(hash.date) ? hash.date : state.editions.has(state.manifest.latestDate) ? state.manifest.latestDate : state.manifest.dates.find(date => state.editions.has(date));
+    buildGlossaryIndex();
     buildArchive();
     bindControls();
     renderEdition();
@@ -381,7 +509,10 @@ async function initialize() {
       const updated = new Intl.DateTimeFormat("zh-CN", {timeZone: "Asia/Shanghai", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false}).format(new Date(state.manifest.updatedAt));
       byId("updated-at").textContent = `最近整理：${updated} · 北京时间（UTC+8）`;
     }
-    if (hash.view === "learn") setView("learn", false);
+    if (hash.view === "learn") {
+      setView("learn", false);
+      if (hash.term) focusGlossaryTerm(hash.term);
+    }
     if (hash.article) focusArticle(hash.article);
   } catch (error) {
     byId("loading").hidden = true;
