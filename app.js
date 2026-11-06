@@ -116,22 +116,55 @@ function handleInternalLink(event, navigate) {
   navigate();
 }
 
-function createTermText(tag, className, text, item = null) {
+function summaryHighlights(item) {
+  const text = item.summary;
+  const explicit = Array.isArray(item.highlights) ? item.highlights.filter(value => typeof value === "string" && value && text.includes(value)).slice(0, 3) : [];
+  if (explicit.length) return explicit.map(value => ({start: text.indexOf(value), end: text.indexOf(value) + value.length}));
+  const clauses = [...text.matchAll(/[^，；。！？]+/gu)].map(match => ({text: match[0], start: match.index, end: match.index + match[0].length}));
+  if (!clauses.length) return [];
+  const impact = clauses.find(clause => /可能|有助于|意味着|显示|有利于|不代表|不等于|但/.test(clause.text));
+  const ranges = [{start: clauses[0].start, end: clauses[0].end}];
+  if (impact && impact !== clauses[0]) ranges.push({start: impact.start, end: text.replace(/[。！？]+$/u, "").length});
+  return ranges;
+}
+
+function appendHighlightedText(node, text, start, end, highlights) {
+  const boundaries = [...new Set([start, end, ...highlights.flatMap(range => [range.start, range.end]).filter(index => index > start && index < end)])].sort((a, b) => a - b);
+  for (let index = 0; index < boundaries.length - 1; index++) {
+    const left = boundaries[index];
+    const right = boundaries[index + 1];
+    const value = text.slice(left, right);
+    node.append(highlights.some(range => left >= range.start && right <= range.end) ? createElement("mark", "news-highlight", value) : document.createTextNode(value));
+  }
+}
+
+function createTermText(tag, className, text, item = null, seen = new Set(), highlights = []) {
   const node = createElement(tag, className);
   let cursor = 0;
   for (const match of findTerms(text, item)) {
-    node.append(document.createTextNode(text.slice(cursor, match.index)));
-    const link = createElement("a", "term-link");
+    appendHighlightedText(node, text, cursor, match.index, highlights);
     const term = match.entry.knowledge.term;
+    const end = match.index + match.text.length;
+    if (seen.has(term)) {
+      appendHighlightedText(node, text, match.index, end, highlights);
+      cursor = end;
+      continue;
+    }
+    seen.add(term);
+    const link = createElement("a", "term-link", match.text);
     link.href = glossaryHref(term);
+    link.dataset.term = term;
     link.title = `查看金融知识：${term}`;
     link.setAttribute("aria-label", `${match.text}，查看金融知识库：${term}`);
-    link.append(createElement("strong", "", match.text));
     link.addEventListener("click", event => handleInternalLink(event, () => openGlossaryTerm(term)));
-    node.append(link);
-    cursor = match.index + match.text.length;
+    if (highlights.some(range => match.index >= range.start && end <= range.end)) {
+      const mark = createElement("mark", "news-highlight");
+      mark.append(link);
+      node.append(mark);
+    } else node.append(link);
+    cursor = end;
   }
-  node.append(document.createTextNode(text.slice(cursor)));
+  appendHighlightedText(node, text, cursor, text.length, highlights);
   return node;
 }
 
@@ -277,6 +310,7 @@ function setLessonOpen(button, panel, isOpen) {
 }
 
 function createNewsCard(item, edition, index) {
+  const seenTerms = new Set();
   const article = createElement("article", `news-card ${item.category} enter-card`);
   article.id = `article-${edition.date}-${item.id}`;
   article.dataset.article = item.id;
@@ -286,10 +320,11 @@ function createNewsCard(item, edition, index) {
   tags.append(createElement("span", "sentiment", CATEGORY_LABELS[item.category] || "中立"), createElement("span", "market-tag", (item.markets || []).join(" / ")), createElement("span", "", item.topic));
   meta.append(tags, createElement("span", "news-time", item.timeLabel || formatDate(edition.date)));
   const titleRow = createElement("div", "news-title-row");
-  titleRow.append(createElement("span", "article-number", String(index + 1).padStart(2, "0")), createTermText("h3", "", item.title, item));
+  titleRow.append(createElement("span", "article-number", String(index + 1).padStart(2, "0")), createTermText("h3", "", item.title, item, seenTerms));
+  const summary = createTermText("p", "news-summary", item.summary, item, seenTerms, summaryHighlights(item));
   const analysis = createElement("div", "analysis");
-  analysis.append(createElement("span", "analysis-label", "为什么重要 · 简单解读"), createTermText("p", "", item.analysis, item));
-  article.append(meta, titleRow, createTermText("p", "news-summary", item.summary, item), analysis);
+  analysis.append(createElement("span", "analysis-label", "为什么重要 · 简单解读"), createTermText("p", "", item.analysis, item, seenTerms));
+  article.append(meta, titleRow, summary, analysis);
   if (item.knowledge?.term) {
     const lessonId = `lesson-${edition.date}-${item.id}`;
     const toggle = createElement("button", "lesson-toggle");
@@ -301,18 +336,18 @@ function createNewsCard(item, edition, index) {
     panel.id = lessonId;
     const inner = createElement("div", "lesson-inner");
     const lesson = createElement("div", "lesson-content");
-    lesson.append(createTermText("p", "", item.knowledge.explanation, item));
-    if (item.knowledge.example) lesson.append(createTermText("p", "example", `举个例子：${item.knowledge.example}`, item));
+    lesson.append(createTermText("p", "", item.knowledge.explanation, item, seenTerms));
+    if (item.knowledge.example) lesson.append(createTermText("p", "example", `举个例子：${item.knowledge.example}`, item, seenTerms));
     const conceptLink = createElement("a", "lesson-glossary-link", `在金融知识库中查看「${item.knowledge.term}」 ↗`);
     conceptLink.href = glossaryHref(item.knowledge.term);
     conceptLink.addEventListener("click", event => handleInternalLink(event, () => openGlossaryTerm(item.knowledge.term)));
     lesson.append(conceptLink);
     if (item.watch) {
       const watch = createElement("p", "watch");
-      watch.append(createElement("strong", "", "接下来观察"), createTermText("span", "", item.watch, item));
+      watch.append(createElement("strong", "", "接下来观察"), createTermText("span", "", item.watch, item, seenTerms));
       lesson.append(watch);
     }
-    if (item.caveat) lesson.append(createTermText("p", "caveat", `判断边界：${item.caveat}`, item));
+    if (item.caveat) lesson.append(createTermText("p", "caveat", `判断边界：${item.caveat}`, item, seenTerms));
     inner.append(lesson);
     panel.append(inner);
     setLessonOpen(toggle, panel, state.expanded);
