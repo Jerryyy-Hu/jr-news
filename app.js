@@ -4,9 +4,159 @@ const CATEGORY_LABELS = {positive: "利好", negative: "负面", neutral: "中�
 const state = {manifest: null, editions: new Map(), date: "", category: "all", market: "all", query: "", allDates: false, expanded: false, view: "news"};
 const byId = id => document.getElementById(id);
 const dayFormatter = new Intl.DateTimeFormat("zh-CN", {timeZone: "Asia/Shanghai", weekday: "long"});
+const activeMotions = new Map();
+let destinationFrame = 0;
+let destinationVersion = 0;
+let destinationScrolling = false;
+let loadingFrame = 0;
+let loadingWasVisible = false;
 
 function canAnimate() {
   return document.documentElement.dataset.input !== "keyboard" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function cancelMotion(node) {
+  const motion = activeMotions.get(node);
+  if (!motion) return;
+  activeMotions.delete(node);
+  motion.animation.cancel();
+  motion.cleanup?.();
+}
+
+function animateOpacity(node, from, to, token, cleanup = null) {
+  if (!node) return;
+  const current = activeMotions.has(node) ? Number(getComputedStyle(node).opacity) : from;
+  cancelMotion(node);
+  if (!canAnimate() || !node.animate) {
+    cleanup?.();
+    return;
+  }
+  const tokens = getComputedStyle(document.documentElement);
+  const animation = node.animate([{opacity: current}, {opacity: to}], {
+    duration: parseFloat(tokens.getPropertyValue(token)),
+    easing: tokens.getPropertyValue("--ease-out").trim()
+  });
+  const motion = {animation, cleanup};
+  activeMotions.set(node, motion);
+  animation.onfinish = () => {
+    if (activeMotions.get(node) !== motion) return;
+    activeMotions.delete(node);
+    cleanup?.();
+  };
+}
+
+function cancelDestination() {
+  destinationVersion++;
+  cancelAnimationFrame(destinationFrame);
+  destinationFrame = 0;
+  if (destinationScrolling) window.scrollTo({top: window.scrollY, behavior: "instant"});
+  destinationScrolling = false;
+}
+
+function stopMotions() {
+  cancelDestination();
+  for (const node of [...activeMotions.keys()]) cancelMotion(node);
+}
+
+function pruneMotions() {
+  for (const node of activeMotions.keys()) if (!node.isConnected) cancelMotion(node);
+}
+
+function emphasizeDestination(card) {
+  if (!canAnimate()) return;
+  let wash = card.querySelector(".arrival-highlight");
+  if (!wash) {
+    wash = createElement("span", "arrival-highlight");
+    wash.setAttribute("aria-hidden", "true");
+    card.prepend(wash);
+  }
+  // Retarget an existing wash rather than replaying a bright flash.
+  animateOpacity(wash, 1, 0, "--motion-locate");
+}
+
+function focusDestination(resolveCard, openLesson = false) {
+  cancelDestination();
+  const version = destinationVersion;
+  const locate = () => {
+    if (version !== destinationVersion) return;
+    const card = resolveCard();
+    if (!card?.isConnected) return;
+    if (openLesson) {
+      const toggle = card.querySelector(".lesson-toggle");
+      if (toggle) setLessonOpen(toggle, byId(toggle.getAttribute("aria-controls")), true);
+    }
+    card.setAttribute("tabindex", "-1");
+    card.focus({preventScroll: true});
+    const smooth = canAnimate();
+    destinationScrolling = smooth;
+    card.scrollIntoView({block: "start", behavior: smooth ? "smooth" : "instant"});
+    if (!smooth) return;
+    const started = performance.now();
+    let lastTop = card.getBoundingClientRect().top;
+    let stableFrames = 0;
+    const settle = () => {
+      if (version !== destinationVersion || !card.isConnected || document.activeElement !== card) return;
+      const top = card.getBoundingClientRect().top;
+      stableFrames = Math.abs(top - lastTop) < 0.5 ? stableFrames + 1 : 0;
+      lastTop = top;
+      // Three settled frames after the scroll has had a chance to start.
+      if (stableFrames >= 3 && performance.now() - started >= 80) {
+        destinationFrame = 0;
+        destinationScrolling = false;
+        emphasizeDestination(card);
+      } else if (performance.now() - started < 1500) {
+        destinationFrame = requestAnimationFrame(settle);
+      } else {
+        destinationFrame = 0;
+        destinationScrolling = false;
+      }
+    };
+    destinationFrame = requestAnimationFrame(settle);
+  };
+  if (canAnimate()) destinationFrame = requestAnimationFrame(locate);
+  else locate();
+}
+
+function updateViewIndicator(animate = true) {
+  const tabs = document.querySelector(".view-tabs");
+  const selected = tabs.querySelector('[aria-pressed="true"]');
+  const indicator = byId("view-indicator");
+  if (!selected || !indicator) return;
+  // Layout measurements exclude the button's temporary press transform.
+  const transform = `translate(${selected.offsetLeft}px, ${selected.offsetTop + selected.offsetHeight - 2}px) scaleX(${selected.offsetWidth})`;
+  if (!animate || !canAnimate()) {
+    indicator.style.transition = "none";
+    indicator.style.transform = transform;
+    indicator.getBoundingClientRect();
+    indicator.style.removeProperty("transition");
+  } else indicator.style.transform = transform;
+}
+
+function trackLoadingVisibility() {
+  const loading = byId("loading");
+  const observe = () => {
+    const rect = loading.getBoundingClientRect();
+    if (!loading.hidden && rect.bottom > 0 && rect.top < window.innerHeight) {
+      loadingFrame = requestAnimationFrame(() => {loadingWasVisible = !loading.hidden;});
+    } else if (!loading.hidden) loadingFrame = requestAnimationFrame(observe);
+  };
+  loadingFrame = requestAnimationFrame(observe);
+}
+
+function finishLoading() {
+  cancelAnimationFrame(loadingFrame);
+  const loading = byId("loading");
+  if (!loadingWasVisible || state.view !== "news" || getHashState().article || !canAnimate() || !loading.animate) {
+    loading.hidden = true;
+    return;
+  }
+  const rect = loading.getBoundingClientRect();
+  const parent = byId("news-view").getBoundingClientRect();
+  Object.assign(loading.style, {position: "absolute", left: `${rect.left - parent.left}px`, top: `${rect.top - parent.top}px`, width: `${rect.width}px`, height: `${rect.height}px`});
+  loading.setAttribute("aria-hidden", "true");
+  loading.classList.add("loading-handoff");
+  animateOpacity(loading, 1, 0, "--motion-handoff", () => {loading.hidden = true;});
+  animateOpacity(byId("news-list"), 0.8, 1, "--motion-handoff");
 }
 
 const TERM_ALIASES = {
@@ -60,7 +210,7 @@ function setHash(date, article = null, view = "news", term = null, push = false)
   if (article) params.set("article", article);
   if (view === "learn") params.set("view", "learn");
   if (term) params.set("term", term);
-  history[push ? "pushState" : "replaceState"](null, "", `${window.location.pathname}${window.location.search}#${params}`);
+  if (window.location.hash !== `#${params}`) history[push ? "pushState" : "replaceState"](null, "", `${window.location.pathname}${window.location.search}#${params}`);
 }
 
 function knowledgeAliases(knowledge) {
@@ -178,13 +328,7 @@ function termDomId(prefix, term) {
 }
 
 function focusGlossaryTerm(term) {
-  requestAnimationFrame(() => {
-    const card = document.getElementById(termDomId("glossary", term));
-    if (!card) return;
-    card.classList.add("located-card");
-    card.focus({preventScroll: true});
-    card.scrollIntoView({block: "start", behavior: canAnimate() ? "smooth" : "auto"});
-  });
+  focusDestination(() => document.getElementById(termDomId("glossary", term)));
 }
 
 function openGlossaryTerm(term) {
@@ -252,6 +396,15 @@ function updateArchiveFades() {
   const maxScroll = archive.scrollWidth - archive.clientWidth;
   archive.classList.toggle("has-overflow-before", maxScroll > 1 && archive.scrollLeft > 1);
   archive.classList.toggle("has-overflow-after", maxScroll > 1 && archive.scrollLeft < maxScroll - 1);
+  const track = byId("archive-track");
+  track.classList.toggle("has-overflow-before", archive.classList.contains("has-overflow-before"));
+  track.classList.toggle("has-overflow-after", archive.classList.contains("has-overflow-after"));
+  const selected = archive.querySelector('[aria-current="date"]');
+  const left = selected ? selected.offsetLeft - archive.scrollLeft : -1;
+  const right = selected ? left + selected.offsetWidth : -1;
+  const fullyVisible = selected && left >= 0 && right <= archive.clientWidth;
+  byId("archive-edge-before").style.transform = `scaleX(${fullyVisible ? Math.min(24, Math.max(0, left - 2)) / 24 : 1})`;
+  byId("archive-edge-after").style.transform = `scaleX(${fullyVisible ? Math.min(24, Math.max(0, archive.clientWidth - right - 2)) / 24 : 1})`;
 }
 
 function revealArchiveDate(smooth = false) {
@@ -275,7 +428,7 @@ function revealArchiveDate(smooth = false) {
   updateArchiveFades();
 }
 
-function selectDate(date, article = null, push = false) {
+function selectDate(date, article = null, push = true) {
   if (!state.editions.has(date)) return;
   const changed = state.date !== date || state.allDates || state.view !== "news";
   if (article) resetFilters(false);
@@ -289,12 +442,15 @@ function selectDate(date, article = null, push = false) {
 }
 
 function setView(view, updateHash = true) {
+  cancelDestination();
+  const changed = state.view !== view;
   state.view = view;
   byId("news-view").hidden = view !== "news";
   byId("learn-view").hidden = view !== "learn";
   for (const button of document.querySelectorAll("[data-view]")) button.setAttribute("aria-pressed", String(button.dataset.view === view));
   if (view === "learn") renderGlossary();
-  if (updateHash) setHash(state.date, null, view);
+  updateViewIndicator();
+  if (updateHash && changed) setHash(state.date, null, view, null, true);
 }
 
 function renderEdition(smoothArchive = false) {
@@ -318,6 +474,10 @@ function renderEdition(smoothArchive = false) {
   byId("next-date").disabled = index <= 0;
   revealArchiveDate(smoothArchive);
   renderNews();
+  if (smoothArchive) {
+    animateOpacity(byId("edition-title"), 0.7, 1, "--motion-feedback");
+    animateOpacity(byId("outlook-text"), 0.7, 1, "--motion-feedback");
+  }
 }
 
 function searchableText(item) {
@@ -409,7 +569,7 @@ function createNewsCard(item, edition, index) {
   permalink.addEventListener("click", () => {
     setHash(edition.date, item.id);
     permalink.textContent = "地址已定位 ✓";
-    article.classList.add("located-card");
+    emphasizeDestination(article);
   });
   bottom.append(sources, permalink);
   article.append(bottom);
@@ -417,6 +577,7 @@ function createNewsCard(item, edition, index) {
 }
 
 function renderNews() {
+  cancelDestination();
   const groups = getFilteredGroups();
   const fragment = document.createDocumentFragment();
   let total = 0;
@@ -432,6 +593,7 @@ function renderNews() {
     fragment.append(section);
   }
   byId("news-list").replaceChildren(fragment);
+  pruneMotions();
   byId("empty-state").hidden = total > 0;
   const baseItems = (state.allDates ? [...state.editions.values()] : [state.editions.get(state.date)]).flatMap(edition => edition?.items || []);
   byId("count-all").textContent = baseItems.length;
@@ -442,6 +604,7 @@ function renderNews() {
 }
 
 function renderGlossary() {
+  cancelDestination();
   const query = byId("glossary-search").value.trim().toLocaleLowerCase();
   const entries = glossaryEntries.filter(({knowledge, aliases}) => !query || [knowledge.term, knowledge.explanation, knowledge.example, ...aliases].join(" ").toLocaleLowerCase().includes(query));
   const fragment = document.createDocumentFragment();
@@ -469,6 +632,7 @@ function renderGlossary() {
     fragment.append(card);
   });
   byId("glossary-list").replaceChildren(fragment);
+  pruneMotions();
   byId("glossary-status").textContent = entries.length ? `共 ${entries.length} 个知识点 · 词条下可跳转全部相关新闻实例。` : "没有匹配的知识点，请换一个关键词。";
 }
 
@@ -487,24 +651,26 @@ function resetFilters(shouldRender = true) {
 }
 
 function focusArticle(id) {
-  requestAnimationFrame(() => {
-    const edition = state.editions.get(state.date);
-    const article = document.getElementById(`article-${edition.date}-${id}`);
-    if (!article) return;
-    const toggle = article.querySelector(".lesson-toggle");
-    if (toggle) setLessonOpen(toggle, byId(toggle.getAttribute("aria-controls")), true);
-    article.classList.add("located-card");
-    article.setAttribute("tabindex", "-1");
-    article.focus({preventScroll: true});
-    article.scrollIntoView({block: "start", behavior: canAnimate() ? "smooth" : "auto"});
-  });
+  const date = state.date;
+  focusDestination(() => document.getElementById(`article-${date}-${id}`), true);
 }
 
 function bindControls() {
-  document.addEventListener("pointerdown", () => {document.documentElement.dataset.input = "pointer";}, {capture: true, passive: true});
+  document.addEventListener("pointerdown", () => {
+    document.documentElement.dataset.input = "pointer";
+    cancelDestination();
+  }, {capture: true, passive: true});
   document.addEventListener("keydown", () => {
     document.documentElement.dataset.input = "keyboard";
+    stopMotions();
   }, {capture: true});
+  window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", stopMotions);
+  document.addEventListener("wheel", cancelDestination, {capture: true, passive: true});
+  document.addEventListener("touchmove", cancelDestination, {capture: true, passive: true});
+  window.addEventListener("resize", () => updateViewIndicator(false));
+  if ("ResizeObserver" in window) new ResizeObserver(() => updateViewIndicator(false)).observe(document.querySelector(".view-tabs"));
+  document.fonts?.ready.then(() => updateViewIndicator(false));
+  updateViewIndicator(false);
   for (const button of document.querySelectorAll("[data-view]")) button.addEventListener("click", () => setView(button.dataset.view));
   for (const button of document.querySelectorAll("[data-category]")) button.addEventListener("click", () => {state.category = button.dataset.category; renderNews();});
   byId("search-form").addEventListener("submit", event => event.preventDefault());
@@ -536,9 +702,15 @@ function bindControls() {
   });
   window.addEventListener("hashchange", () => {
     const hash = getHashState();
+    const previousViewHadFocus = byId("news-view").contains(document.activeElement) || byId("learn-view").contains(document.activeElement);
+    const changed = hash.date && state.date !== hash.date;
     if (hash.date && state.editions.has(hash.date)) state.date = hash.date;
     if (hash.article) resetFilters(false);
-    renderEdition();
+    if (changed) {
+      state.allDates = false;
+      byId("search-all-dates").checked = false;
+    }
+    renderEdition(changed);
     if (hash.view === "learn") {
       if (hash.term) byId("glossary-search").value = "";
       setView("learn", false);
@@ -547,10 +719,17 @@ function bindControls() {
       setView("news", false);
       if (hash.article) focusArticle(hash.article);
     }
+    const view = byId(hash.view === "learn" ? "learn-view" : "news-view");
+    if (!hash.article && !hash.term && previousViewHadFocus && !view.contains(document.activeElement)) {
+      const heading = byId(hash.view === "learn" ? "learn-title" : "edition-title");
+      heading.setAttribute("tabindex", "-1");
+      heading.focus({preventScroll: true});
+    }
   });
 }
 
 async function initialize() {
+  trackLoadingVisibility();
   try {
     const bundle = window.__JR_NEWS_BUNDLE__;
     state.manifest = bundle?.manifest || await fetchJson("./data/index.json");
@@ -566,11 +745,11 @@ async function initialize() {
     if (failures) showNotice(`有 ${failures} 期简报暂时无法载入，当前显示已成功读取的内容；可以稍后刷新重试。`);
     const hash = getHashState();
     state.date = state.editions.has(hash.date) ? hash.date : state.editions.has(state.manifest.latestDate) ? state.manifest.latestDate : state.manifest.dates.find(date => state.editions.has(date));
+    if (!window.location.hash) setHash(state.date);
     buildGlossaryIndex();
     buildArchive();
     bindControls();
     renderEdition();
-    byId("loading").hidden = true;
     if (state.manifest.nextEdition) byId("next-edition").textContent = `下一期：${formatDate(state.manifest.nextEdition)} 22:00`;
     if (state.manifest.updatedAt) {
       const updated = new Intl.DateTimeFormat("zh-CN", {timeZone: "Asia/Shanghai", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false}).format(new Date(state.manifest.updatedAt));
@@ -581,7 +760,9 @@ async function initialize() {
       if (hash.term) focusGlossaryTerm(hash.term);
     }
     if (hash.article) focusArticle(hash.article);
+    finishLoading();
   } catch (error) {
+    cancelAnimationFrame(loadingFrame);
     byId("loading").hidden = true;
     byId("results-status").textContent = "简报暂时无法载入";
     byId("outlook-text").textContent = "内容暂时无法读取，请稍后刷新页面。";

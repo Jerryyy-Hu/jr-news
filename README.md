@@ -83,7 +83,9 @@ News summaries use 15px type and explanations use 14px type, with larger seconda
 
 Desktop dates remain newest first and use a bounded native vertical scroller as the archive grows; mobile dates remain oldest left, newest right with native horizontal scrolling and conditional edge fades. Changing the breakpoint preserves the selected date and keyboard focus. Glossary heading IDs encode spaces and punctuation while shareable hashes keep the original term.
 
-Financial content changes immediately. Motion is limited to interruptible date/tab indicators, press feedback and the lesson icon (140–200ms, existing tokens). Lesson content expands immediately, and location feedback uses a static outline. Keyboard input and reduced-motion preferences disable animation; hover feedback requires a fine pointer with hover capability. Real-device touch and visual regression checks remain separate from offline DOM contract checks.
+Financial content and counts change immediately. Lessons expand without layout animation and reveal text over 140ms; closing is immediate. A single 180ms transform-based indicator moves between views. Date titles and outlook text share a subtle 140ms fade while article cards stay immediately readable. Category colors transition over 140ms; mobile archive edges fade over 120ms according to actual overflow and avoid fully visible selected dates. Navigation waits for native scrolling to settle, then gives the destination a single 280ms background wash. Pending destinations and opacity animations are canceled or retargeted on interruption. A painted, visible loading state hands off over 120ms without extending network loading or forcing a skeleton for fast loads.
+
+Keyboard input and the existing reduced-motion preferences disable motion; hover feedback requires a fine pointer with hover capability. Navigation adds history entries without duplicating the same URL. Real-device touch and visual regression checks remain separate from offline DOM contract checks. Private fixture routes and motion-environment emulation are kept outside the public site source.
 
 ## Deployment
 
