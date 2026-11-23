@@ -29,8 +29,18 @@
       </aside>
       <main id="main-content">
         <section id="news-view" aria-label="每日新闻简报">
-          <div class="edition-heading"><div><p class="eyebrow">YOUR MARKET NOTEBOOK</p><h1 id="edition-title">今天，市场在关注什么？</h1><p id="edition-window" class="edition-window">正在载入每日简报…</p></div><div class="date-arrows" role="group" aria-label="切换简报日期"><button id="previous-date" type="button" aria-label="阅读前一天的简报" disabled>←</button><button id="next-date" type="button" aria-label="阅读后一天的简报" disabled>→</button></div></div>
-          <section class="outlook" aria-labelledby="outlook-label"><div class="outlook-caption"><span class="outlook-symbol" aria-hidden="true">↗</span><div><span class="eyebrow">THE BIG PICTURE</span><h2 id="outlook-label">一句话，读懂今日风向</h2></div></div><p id="outlook-text">重要消息正在整理中。</p><div class="outlook-foot"><span>基于本期消息的综合判断</span><span>影响方向 ≠ 涨跌承诺</span></div></section>
+          <div class="edition-heading"><div><p class="eyebrow">YOUR MARKET NOTEBOOK</p><h1 id="edition-title">今天，市场在关注什么？</h1><p id="edition-window" class="edition-window">正在载入每日简报…</p></div><div class="date-arrows" role="group" aria-label="切换简报日期"><button id="previous-date" type="button" aria-label="阅读上一期简报" disabled>←</button><button id="next-date" type="button" aria-label="阅读下一期简报" disabled>→</button></div></div>
+          <p id="date-notice" class="date-notice" role="status" hidden></p>
+          <section class="outlook" aria-labelledby="outlook-label">
+            <div class="outlook-caption"><span class="outlook-symbol" aria-hidden="true">↗</span><div><span class="eyebrow">THE BIG PICTURE</span><h2 id="outlook-label">一句话，读懂今日风向</h2></div></div>
+            <p id="outlook-text">重要消息正在整理中。</p>
+            <section id="outlook-headlines" class="outlook-headlines" aria-labelledby="outlook-headlines-label" hidden>
+              <h3 id="outlook-headlines-label">本期重点</h3>
+              <ul id="outlook-headlines-list" role="list"></ul>
+            </section>
+            <div class="outlook-foot"><span>基于本期消息的综合判断</span><span>影响方向 ≠ 涨跌承诺</span></div>
+          </section>
+          <details id="weekly-review" class="weekly-review" hidden></details>
           <div class="reading-toolbar"><div class="category-filters" role="group" aria-label="按影响方向筛选"><button type="button" data-category="all" aria-pressed="true">全部 <span id="count-all">—</span></button><button type="button" data-category="positive" aria-pressed="false"><i class="category-dot positive" aria-hidden="true"></i>利好 <span id="count-positive">—</span></button><button type="button" data-category="negative" aria-pressed="false"><i class="category-dot negative" aria-hidden="true"></i>负面 <span id="count-negative">—</span></button><button type="button" data-category="neutral" aria-pressed="false"><i class="category-dot neutral" aria-hidden="true"></i>中立 <span id="count-neutral">—</span></button></div><button id="expand-lessons" class="text-button" type="button" aria-pressed="false">展开全部知识讲解 <span aria-hidden="true">＋</span></button></div>
           <form id="search-form" class="search-toolbar" role="search"><label class="search-field"><span class="visually-hidden">搜索新闻与金融知识</span><span aria-hidden="true">⌕</span><input id="news-search" type="search" placeholder="搜索事件、公司或金融名词…" autocomplete="off"></label><label class="select-field"><span class="visually-hidden">选择影响市场</span><select id="market-filter"><option value="all">全部市场</option><option value="A股">A股</option><option value="美股">美股</option></select></label><label class="archive-search"><input id="search-all-dates" type="checkbox"><span>搜索全部日期</span></label></form>
           <div class="results-row"><p id="results-status" role="status" aria-live="polite">正在核对归档…</p><button id="clear-filters" class="text-button" type="button" hidden>清除筛选</button></div>

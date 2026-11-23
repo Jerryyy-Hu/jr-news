@@ -173,7 +173,14 @@ const TERM_ALIASES = {
   "初请、续请与存量流量": ["初请", "续请", "存量", "流量"],
   "非农就业与失业率的统计口径": ["非农就业", "非农", "失业率"],
   "库存可用天数与供应缓冲": ["库存可用天数", "可用天数", "供应缓冲"],
-  "回购授权与每股收益": ["股票回购授权", "股票回购", "回购授权", "每股收益", "回购"]
+  "回购授权与每股收益": ["股票回购授权", "股票回购", "回购授权", "每股收益", "回购"],
+  "融资额、估值与利润": ["公司融资", "企业融资", "AI融资"]
+};
+// Bare financing needs an explicit link to the article's own lesson.
+const CONTEXT_ONLY_ALIASES = new Set(["融资"]);
+const TIMELINE_STAGES = {
+  background: "背景", proposal: "研究提议", announcement: "已公告",
+  scheduled: "待生效", effective: "已生效", outcome: "已验证结果", watch: "待验证"
 };
 let glossaryEntries = [];
 let termTargets = new Map();
@@ -255,6 +262,8 @@ function findTerms(text, item = null) {
   termPattern.lastIndex = 0;
   const ownAliases = item?.knowledge ? knowledgeAliases(item.knowledge).map(alias => alias.toLocaleLowerCase()) : [];
   return [...text.matchAll(termPattern)].filter(match => {
+    const label = match[0].toLocaleLowerCase();
+    if (CONTEXT_ONLY_ALIASES.has(label) && !ownAliases.includes(label)) return false;
     if (!/^[a-z0-9]/i.test(match[0])) return true;
     return !/[a-z0-9]/i.test(text[match.index - 1] || "") && !/[a-z0-9]/i.test(text[match.index + match[0].length] || "");
   }).map(match => ({text: match[0], index: match.index, entry: ownAliases.includes(match[0].toLocaleLowerCase())
@@ -269,6 +278,35 @@ function handleInternalLink(event, navigate) {
   if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   event.preventDefault();
   navigate();
+}
+
+function createArticleLink(date, id, label, className) {
+  const link = createElement("a", className, label);
+  link.href = `#${new URLSearchParams({date, article: id})}`;
+  link.addEventListener("click", event => handleInternalLink(event, () => selectDate(date, id)));
+  return link;
+}
+
+function createArchiveArticleLink({date, id}, label) {
+  const item = state.editions.get(date)?.items.find(story => story.id === id);
+  if (!item) return null;
+  return createArticleLink(date, id, label || `${formatDate(date)} · ${item.title}`);
+}
+
+function createSourceLink(source) {
+  try {
+    const url = new URL(source.url);
+    if (url.protocol !== "https:") return null;
+    const link = createElement("a", "", `${source.name} ↗`);
+    link.href = url.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.title = source.verification === "search_excerpt" ? "根据检索摘要核对，原文待复核" : "已读取来源正文";
+    if (source.verification === "search_excerpt") link.append(createElement("span", "source-note", " · 摘要"));
+    return link;
+  } catch {
+    return null;
+  }
 }
 
 function summaryHighlights(item) {
@@ -349,19 +387,32 @@ async function fetchJson(path) {
   return response.json();
 }
 
+function calendarDates(dates) {
+  const earliest = new Date(`${dates.at(-1)}T00:00:00Z`);
+  const datesWithGaps = [];
+  for (const day = new Date(`${dates[0]}T00:00:00Z`); day >= earliest; day.setUTCDate(day.getUTCDate() - 1)) {
+    datesWithGaps.push(day.toISOString().slice(0, 10));
+  }
+  return datesWithGaps;
+}
+
 function buildArchive() {
   const fragment = document.createDocumentFragment();
-  for (const date of state.manifest.dates) {
+  const publishedDates = new Set(state.manifest.dates);
+  for (const date of calendarDates(state.manifest.dates)) {
     const edition = state.editions.get(date);
     const button = createElement("button", "date-button");
     button.type = "button";
     button.dataset.date = date;
-    button.setAttribute("aria-label", `${formatDate(date, true)}的简报${edition ? `，${edition.items.length}条消息` : "，暂不可用"}`);
+    const gap = !publishedDates.has(date);
+    if (gap) button.dataset.gap = "";
+    const availability = edition ? `${edition.items.length} 条消息` : gap ? "暂无已发布简报" : "加载失败";
+    button.setAttribute("aria-label", `${formatDate(date, true)}，${availability}`);
     button.disabled = !edition;
     const label = createElement("span", "date-button-main");
     label.append(createElement("span", "date-numeral", date.slice(5).replace("-", ".")), createElement("span", "date-weekday", dayFormatter.format(new Date(`${date}T12:00:00+08:00`)).replace("星期", "周")));
     const count = createElement("span", "date-count");
-    count.append(createElement("span", "", edition ? `${edition.items.length} 条消息` : "加载失败"));
+    count.append(createElement("span", "", availability));
     if (date === state.manifest.latestDate) count.append(createElement("span", "", " · 最新"));
     button.append(label, count);
     button.addEventListener("click", () => selectDate(date));
@@ -453,6 +504,81 @@ function setView(view, updateHash = true) {
   if (updateHash && changed) setHash(state.date, null, view, null, true);
 }
 
+function resolveEditionDate(requestedDate) {
+  if (state.editions.has(requestedDate)) return requestedDate;
+  if (state.editions.has(state.manifest.latestDate)) return state.manifest.latestDate;
+  return state.manifest.dates.find(date => state.editions.has(date));
+}
+
+function renderDateNotice() {
+  const notice = byId("date-notice");
+  if (!notice) return;
+  const {date} = getHashState();
+  notice.hidden = !date || date === state.date;
+  if (notice.hidden) return;
+  const parsed = new Date(`${date}T00:00:00Z`);
+  const valid = /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === date;
+  let message = "日期链接无效。";
+  if (valid) message = state.manifest.dates.includes(date)
+    ? `${formatDate(date, true)}的简报暂时无法载入。`
+    : `${formatDate(date, true)}暂无已发布简报。`;
+  notice.textContent = `${message}当前显示${formatDate(state.date)}的简报。`;
+}
+
+function renderOutlookHeadlines(edition) {
+  const section = byId("outlook-headlines");
+  if (!section) return;
+  const items = Array.isArray(edition.featuredArticleIds)
+    ? edition.featuredArticleIds.map(id => edition.items.find(item => item.id === id)).filter(Boolean)
+    : edition.items;
+  const rows = items.slice(0, 3).map(item => {
+    const row = createElement("li");
+    const link = createArticleLink(edition.date, item.id, item.title, "outlook-headline");
+    const arrow = createElement("span", "", "↓");
+    arrow.setAttribute("aria-hidden", "true");
+    link.append(arrow);
+    row.append(link);
+    return row;
+  });
+  byId("outlook-headlines-list").replaceChildren(...rows);
+  section.hidden = !rows.length;
+}
+
+function renderWeeklyReview(edition) {
+  const section = byId("weekly-review");
+  if (!section || section.dataset.date === edition.date) return;
+  section.dataset.date = edition.date;
+  const review = edition.weeklyReview;
+  section.hidden = !review;
+  section.open = false;
+  section.replaceChildren();
+  if (!review) return;
+
+  const summary = createElement("summary");
+  summary.append(
+    createElement("span", "weekly-period", `每周复盘 · ${formatDate(review.periodStart)}—${formatDate(review.periodEnd)}`),
+    createElement("strong", "", review.title)
+  );
+  const body = createElement("div", "weekly-body");
+  const findings = createElement("dl");
+  for (const [label, text] of [["当时要看", review.expected], ["后来看到", review.observed], ["仍待验证", review.unresolved]]) {
+    const row = createElement("div");
+    row.append(createElement("dt", "", label), createElement("dd", "", text));
+    findings.append(row);
+  }
+  body.append(findings);
+  const related = review.articles.map(ref => createArchiveArticleLink(ref)).filter(Boolean);
+  if (related.length) {
+    const links = createElement("div", "source-links");
+    links.append(createElement("span", "", "回看简报"), ...related);
+    body.append(links);
+  }
+  const sources = createElement("div", "source-links");
+  sources.append(createElement("span", "", "核实来源"), ...review.sources.map(createSourceLink).filter(Boolean));
+  body.append(sources);
+  section.append(summary, body);
+}
+
 function renderEdition(smoothArchive = false) {
   const edition = state.editions.get(state.date);
   if (!edition) return;
@@ -461,6 +587,9 @@ function renderEdition(smoothArchive = false) {
   byId("edition-title").textContent = `${formatDate(state.date)}，市场在关注什么？`;
   byId("edition-window").textContent = formatWindow(edition);
   byId("outlook-text").replaceChildren(...createTermText("span", "", edition.outlook).childNodes);
+  renderDateNotice();
+  renderOutlookHeadlines(edition);
+  renderWeeklyReview(edition);
   byId("coverage-text").textContent = edition.coverageNote || "新闻按公开发布时间纳入本期，市场影响为分析判断。";
   byId("backfill-note").textContent = edition.backfilled ? "本期为历史补录：按当时已公开的信息整理；后续结果不倒填为当日已知事实。" : "消息按截止时点整理，已发生的市场表现与后续可能影响分别说明。";
   byId("coverage").hidden = false;
@@ -481,7 +610,8 @@ function renderEdition(smoothArchive = false) {
 }
 
 function searchableText(item) {
-  return [item.title, item.summary, item.analysis, item.topic, ...(item.markets || []), item.knowledge?.term, item.knowledge?.explanation, item.knowledge?.example, item.watch].filter(Boolean).join(" ").toLocaleLowerCase();
+  const timeline = (item.timeline || []).map(step => step.text);
+  return [item.title, item.summary, item.analysis, item.topic, ...(item.markets || []), item.knowledge?.term, item.knowledge?.explanation, item.knowledge?.example, item.watch, ...timeline].filter(Boolean).join(" ").toLocaleLowerCase();
 }
 
 function getFilteredGroups() {
@@ -500,6 +630,34 @@ function setLessonOpen(button, panel, isOpen) {
   panel.setAttribute("aria-hidden", String(!isOpen));
 }
 
+function createTimeline(steps, editionDate) {
+  const section = createElement("section", "event-timeline");
+  const list = createElement("ol");
+  list.setAttribute("role", "list");
+  for (const step of steps) {
+    const row = createElement("li");
+    const stage = createElement("div", "timeline-stage");
+    if (step.date) {
+      const date = createElement("time", "", formatDate(step.date, step.date.slice(0, 4) !== editionDate.slice(0, 4)));
+      date.dateTime = step.date;
+      stage.append(date);
+    }
+    stage.append(createElement("span", "", TIMELINE_STAGES[step.stage]));
+    row.append(stage, createElement("p", "", step.text));
+    const links = createElement("div", "source-links");
+    const source = createSourceLink(step.source);
+    if (source) links.append(source);
+    if (step.article) {
+      const related = createArchiveArticleLink(step.article, `回看${formatDate(step.article.date)}简报`);
+      if (related) links.append(related);
+    }
+    row.append(links);
+    list.append(row);
+  }
+  section.append(createElement("h4", "", "事件时间线"), list);
+  return section;
+}
+
 function createNewsCard(item, edition, index) {
   const seenTerms = new Set();
   const article = createElement("article", `news-card ${item.category}`);
@@ -515,6 +673,7 @@ function createNewsCard(item, edition, index) {
   const analysis = createElement("div", "analysis");
   analysis.append(createElement("span", "analysis-label", "为什么重要 · 简单解读"), createTermText("p", "", item.analysis, item, seenTerms));
   article.append(meta, titleRow, summary, analysis);
+  if (item.timeline?.length) article.append(createTimeline(item.timeline, edition.date));
   if (item.knowledge?.term) {
     const lessonId = `lesson-${edition.date}-${item.id}`;
     const toggle = createElement("button", "lesson-toggle");
@@ -548,19 +707,8 @@ function createNewsCard(item, edition, index) {
   const sources = createElement("div", "source-links");
   sources.append(createElement("span", "", "消息来源"));
   for (const source of item.sources || []) {
-    try {
-      const url = new URL(source.url);
-      if (url.protocol !== "https:") continue;
-      const link = createElement("a", "", `${source.name} ↗`);
-      link.href = url.href;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.title = source.verification === "search_excerpt" ? "根据检索摘要核对，原文待复核" : "已读取来源正文";
-      if (source.verification === "search_excerpt") link.append(createElement("span", "source-note", " · 摘要"));
-      sources.append(link);
-    } catch {
-      continue;
-    }
+    const link = createSourceLink(source);
+    if (link) sources.append(link);
   }
   if (item.sources?.length && item.sources.every(source => source.verification === "search_excerpt")) sources.append(createElement("span", "source-note", "依据检索摘要，原文待复核"));
   const permalink = createElement("button", "permalink", "定位此条 ↗");
@@ -620,9 +768,7 @@ function renderGlossary() {
     examples.append(createElement("h3", "", `在新闻中看实例 · ${stories.size} 条`));
     const list = createElement("ul", "concept-story-list");
     for (const {date, item} of [...stories.values()].sort((a, b) => b.date.localeCompare(a.date))) {
-      const related = createElement("a", "related-story", `${formatDate(date, true)} · ${item.title} ↗`);
-      related.href = `#${new URLSearchParams({date, article: item.id})}`;
-      related.addEventListener("click", event => handleInternalLink(event, () => selectDate(date, item.id, true)));
+      const related = createArticleLink(date, item.id, `${formatDate(date, true)} · ${item.title} ↗`, "related-story");
       const row = createElement("li", "");
       row.append(related);
       list.append(row);
@@ -703,8 +849,9 @@ function bindControls() {
   window.addEventListener("hashchange", () => {
     const hash = getHashState();
     const previousViewHadFocus = byId("news-view").contains(document.activeElement) || byId("learn-view").contains(document.activeElement);
-    const changed = hash.date && state.date !== hash.date;
-    if (hash.date && state.editions.has(hash.date)) state.date = hash.date;
+    const date = hash.date ? resolveEditionDate(hash.date) : state.date;
+    const changed = state.date !== date;
+    state.date = date;
     if (hash.article) resetFilters(false);
     if (changed) {
       state.allDates = false;
@@ -744,7 +891,7 @@ async function initialize() {
     const failures = results.filter(result => result.status === "rejected").length;
     if (failures) showNotice(`有 ${failures} 期简报暂时无法载入，当前显示已成功读取的内容；可以稍后刷新重试。`);
     const hash = getHashState();
-    state.date = state.editions.has(hash.date) ? hash.date : state.editions.has(state.manifest.latestDate) ? state.manifest.latestDate : state.manifest.dates.find(date => state.editions.has(date));
+    state.date = resolveEditionDate(hash.date);
     if (!window.location.hash) setHash(state.date);
     buildGlossaryIndex();
     buildArchive();

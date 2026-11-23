@@ -112,4 +112,132 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media(any-pointer:coarse){:is(.search-field input,.select-field select,.glossary-search input){font-size:16px;min-height:44px}}
 @media print{.arrival-highlight,.archive-edge,.view-indicator{display:none}.lesson-content{opacity:1}.archive-dates{max-height:none;overflow:visible}}
 
+.date-button[data-gap],
+.date-button[data-gap]:hover {
+  border-color: var(--line);
+  background: transparent;
+  transform: none;
+}
+.date-button[data-gap] .date-count { opacity: 1; }
+.date-notice {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border-inline-start: 2px solid var(--accent);
+  background: #eee9dc;
+  font-size: 13px;
+}
+
+.outlook-headlines {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #cbd5c7;
+}
+.outlook-headlines h3 {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.outlook-headlines ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  column-gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.outlook-headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 4px;
+  font-size: 13px;
+  text-decoration-color: #597567;
+  overflow-wrap: anywhere;
+}
+.outlook-headline span { color: var(--negative); }
+
+.weekly-review {
+  margin-top: 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--card);
+  overflow-wrap: anywhere;
+}
+.weekly-review summary {
+  min-height: 44px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.weekly-review summary:focus-visible { outline: 3px solid #a67b2b; outline-offset: 2px; }
+.weekly-period {
+  margin-inline-end: .75em;
+  color: var(--muted);
+  font-size: 12px;
+}
+.weekly-review[open] summary { border-bottom: 1px solid var(--line); }
+.weekly-body { padding: 12px 16px 15px; }
+.weekly-body dl { margin: 0 0 12px; }
+.weekly-body dl > div {
+  display: grid;
+  grid-template-columns: 5em minmax(0, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.weekly-body dt { font-weight: 600; }
+.weekly-body dd { margin: 0; }
+.weekly-body .source-links { margin-top: 8px; }
+
+.event-timeline {
+  margin: 17px 0 0;
+  padding: 12px 0 3px;
+  border-top: 1px solid var(--line);
+}
+.event-timeline h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.event-timeline ol {
+  margin: 0 0 0 4px;
+  padding: 0 0 0 15px;
+  border-inline-start: 1px solid #bdc9bd;
+  list-style: none;
+}
+.event-timeline li {
+  position: relative;
+  margin: 0;
+  padding: 0 0 10px;
+}
+.event-timeline li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -19px;
+  top: .55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--negative);
+}
+.event-timeline p { margin: 2px 0 0; }
+.timeline-stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.timeline-stage time { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.event-timeline .source-links { margin-top: 3px; }
+
+@media(max-width:760px) {
+  .outlook-headlines li + li { border-top: 1px solid #cbd5c7; }
+  .weekly-body dl > div { grid-template-columns: minmax(0, 1fr); gap: 1px; }
+}
+
 @media print{body{background:white;font-size:11px}.site-shell{max-width:none;padding:0}.archive-sidebar,.main-nav,.topline,.date-arrows,.reading-toolbar,.search-toolbar,.results-row,.back-top,.reading-guide,.permalink,.lesson-toggle{display:none}.workspace{display:block;padding-top:20px}.masthead{padding:0 0 18px;border-bottom:2px solid var(--ink)}.brand{font-size:42px}.outlook{background:#f4f5ee}.outlook>p{font-size:18px}.news-card{break-inside:avoid;box-shadow:none}.news-card h3{font-size:16px}.lesson-panel{display:block;opacity:1;visibility:visible;grid-template-rows:1fr}.lesson-inner{overflow:visible}.site-footer{margin-top:15px}.coverage{break-inside:avoid}}

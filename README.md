@@ -16,6 +16,10 @@ News summaries automatically highlight the opening factual clause and, when pres
 
 Financial terms use gray underlined links to a focused glossary entry. Each knowledge point is linked only at its first occurrence within an article, in reading order, including its expanded lesson. Each entry lists all related news examples across dates; following an example clears news filters and opens that article's lesson. Term links support direct URLs, browser Back/Forward, keyboard navigation, and opening in a new tab. Matching uses the longest known label first and preserves plain text safely. New lessons are indexed automatically from `knowledge.term`; optional `knowledge.aliases` can supply specific alternative labels that the lesson actually explains. Keep aliases precise and avoid generic words with unrelated meanings.
 
+Ambiguous bare labels such as `融资` link only when they belong to that article's own lesson. Qualified phrases such as `企业融资` and `融资保证金比例` can point to their distinct concepts. Keep the lesson's `knowledge.term` stable for existing glossary links.
+
+The outlook lists up to three article headlines in edition order. An optional ordered `featuredArticleIds` array can select up to three articles from the same edition. These links use the existing article URL and clear filters when opened.
+
 ## Local preview
 
 No dependencies or build framework are required. From the project directory:
@@ -77,11 +81,18 @@ The user authorized GitHub publication and subsequent scheduled updates on Novem
 
 If publication time is unavailable, use a verified `eventAt` timestamp or an explicit approximate `eventDate` plus a time-zone explanation. Mark search-only verification honestly. Source pages may change; preserve verified values in the edition rather than silently replacing history.
 
+Optional editorial fields use the existing edition files and require no separate publishing step:
+
+- `item.timeline` is a chronological array of `{date, stage, text, source, article?}`. Use `YYYY-MM-DD`, a source in the news source format, and an optional archive reference `{date, id}`. Stages are `background`, `proposal`, `announcement`, `scheduled`, `effective`, `outcome`, and `watch`. Mark future effective dates as `scheduled` and use an undated final `watch` step for evidence still needed. Date verified outcomes by when they occurred and keep them within the edition's historical record.
+- `weeklyReview` on the chosen edition takes `{periodStart, periodEnd, title, expected, observed, unresolved, articles, sources}`. Use calendar dates for the period, brief prose for each finding, `{date, id}` references to earlier editions, and verified source records. The review appears in a separate disclosure under the outlook and is excluded from daily article counts.
+
 ## Frontend interaction and accessibility
 
 News summaries use 15px type and explanations use 14px type, with larger secondary labels. Touch search/select inputs use at least 16px and retain browser zoom. Long financial text and source names wrap in full. Safe-area padding supports edge-to-edge mobile browsers without blocking native document or archive scrolling.
 
 Desktop dates remain newest first and use a bounded native vertical scroller as the archive grows; mobile dates remain oldest left, newest right with native horizontal scrolling and conditional edge fades. Changing the breakpoint preserves the selected date and keyboard focus. Glossary heading IDs encode spaces and punctuation while shareable hashes keep the original term.
+
+Date gaps between the first and latest published edition are derived from the manifest. The archive labels those dates as having no published edition, distinguishes an indexed edition that failed to load, and skips both in previous/next navigation. A direct link to an unavailable date names the requested date and the edition shown as a fallback. Adding a real edition to the manifest replaces its gap automatically.
 
 Financial content and counts change immediately. Lessons expand without layout animation and reveal text over 140ms; closing is immediate. A single 180ms transform-based indicator moves between views. Date titles and outlook text share a subtle 140ms fade while article cards stay immediately readable. Category colors transition over 140ms; mobile archive edges fade over 120ms according to actual overflow and avoid fully visible selected dates. Navigation waits for native scrolling to settle, then gives the destination a single 280ms background wash. Pending destinations and opacity animations are canceled or retargeted on interruption. A painted, visible loading state hands off over 120ms without extending network loading or forcing a skeleton for fast loads.
 

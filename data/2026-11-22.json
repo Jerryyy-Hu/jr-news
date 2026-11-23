@@ -5,6 +5,46 @@
   "backfilled": false,
   "outlook": "国内稳市组合拳与韩国应急准备为情绪提供支持，但中东袭击、海外政策变数及风险资产剧烈波动仍令修复偏谨慎，实际行情需待交易重开验证。",
   "coverageNote": "本期覆盖北京时间11月21日22:00至22日22:00，触发略早于截止点，最终校验与发布均在22:00后进行，只纳入截止前已公开的信息。22日为周日，A股和美股均无新的常规收盘，不重复把美东周五行情算作周日结果。中国稳市组合拳中的融资、做市和降费为不同机制，分别讲解，同一机制的多篇报道合并；已区分公告、征求意见、未来生效与实际执行。比特币仅列窗口内明确时点的回升报价，非22:00现价。巴林伤情采用截止前后续报道，替换早报的无人受伤说法；COP31采用截止前未获总括协议共识的进展，不用早先接近达成的版本代替结果。未把早已公开的美股大跌、英伟达调查、软银旧收购设想、霍尔木兹周六清晨油轮事件、库克周五讲话或印尼与欧盟更早签约的转载当作本期新消息。既有归档及缺期保持原样。",
+  "weeklyReview": {
+    "periodStart": "2026-11-16",
+    "periodEnd": "2026-11-22",
+    "title": "从83美元发行价到两天成交，Anthropic上市复盘",
+    "expected": "定价简报关注发行能否如期交割，并等开盘和收盘价公布后，再与83美元发行价对照。",
+    "observed": "公司11月20日确认交割完成，承销商按发行价买入了全部获准增发的股份。美东19日首日开盘111.50美元、收盘97.17美元，20日收于88.91美元。按第二日收盘价算，发行获配者约涨7%，首日开盘买入者约跌20%，均未计费用。",
+    "unresolved": "后续财报仍需检验募资如何使用、经营现金流能否覆盖算力投入。上市两天的价格只能反映当时的交易结果，长期经营回报仍待验证。",
+    "articles": [
+      {
+        "date": "2026-11-19",
+        "id": "20261119-anthropic-ipo-pricing"
+      },
+      {
+        "date": "2026-11-20",
+        "id": "20261120-anthropic-first-session"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Anthropic：交割及超额配售公告",
+        "url": "https://www.anthropic.com/news/ipo-close",
+        "verification": "full_text"
+      },
+      {
+        "name": "纳斯达克：上市开盘价",
+        "url": "https://www.nasdaq.com/newsroom/anthropic-marks-ipo-at-nasdaq",
+        "verification": "full_text"
+      },
+      {
+        "name": "德新社／Yahoo：首日收盘",
+        "url": "https://finance.yahoo.com/technology/ai/articles/anthropic-slips-below-2-trillion-010338585.html",
+        "verification": "full_text"
+      },
+      {
+        "name": "路透社／Investing.com：次日实际收盘",
+        "url": "https://www.investing.com/news/economy-news/anthropics-postdebut-stumble-delivers-reality-check-for-ai-trade-5041125",
+        "verification": "full_text"
+      }
+    ]
+  },
   "items": [
     {
       "id": "20261122-china-financing-margin-rule",
@@ -21,13 +61,71 @@
       "knowledge": {
         "term": "融资保证金比例",
         "aliases": [
-          "融资保证金比例"
+          "融资保证金下限",
+          "融资保证金",
+          "融资买入额",
+          "融资买入"
         ],
         "explanation": "融资买入是向券商借款买证券，融资保证金比例是交付保证金与融资买入交易金额的比例。比例下限降低，可以扩大同额保证金对应的融资买入额，也会增加投资者可能承担的借款和亏损；它不等于维持担保比例，券商实际要求也可以更严格。",
         "example": "假设可用保证金100元全部用于开仓，比例100%时对应100元融资买入额，80%时可对应125元；这是未计证券折算率、费用和券商限制的简化例子，不表示凭空多赚25元。"
       },
       "watch": "观察11月30日实施后的券商具体要求、融资买入额与余额变化，以及新增融资是否伴随异常交易或集中平仓压力。",
       "caveat": "公告已发布但截至本期尚未生效，不称为周日即时提高杠杆或已经买入股票。时间采用界面新闻在新浪的18:39可见报道与对应+08:00元数据，非交易所首发分钟；站内另有18:47文章处理时间，所有相关版本均在窗口内。未引用近4000亿元理论估算作为实际入市资金，也未把融资买入额的倍数等同于账户总资产杠杆。",
+      "timeline": [
+        {
+          "date": "2026-01-19",
+          "stage": "effective",
+          "text": "1月14日公布的上调规则开始施行，新开融资买入的保证金下限提高至100%。",
+          "source": {
+            "name": "上交所旧规（巨潮资讯存档）",
+            "url": "https://dataclouds.cninfo.com.cn/shxs/laws/spider/2026-01-16/ec4f1dbd34-76d21f0151608967433838d35b65189f_2.pdf",
+            "verification": "full_text"
+          }
+        },
+        {
+          "date": "2026-11-02",
+          "stage": "proposal",
+          "text": "证监会提出研究优化融资保证金等风控指标，具体比例尚待规则公告。",
+          "source": {
+            "name": "证监会答记者问",
+            "url": "https://www.csrc.gov.cn/csrc/c100028/c7668092/content.shtml",
+            "verification": "full_text"
+          },
+          "article": {
+            "date": "2026-11-02",
+            "id": "20261102-cn-margin"
+          }
+        },
+        {
+          "date": "2026-11-22",
+          "stage": "announcement",
+          "text": "沪深北交易所经证监会批准，公告将融资保证金比例下限从100%降至80%。",
+          "source": {
+            "name": "上交所对三所规则的说明",
+            "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20261122_10838649.shtml",
+            "verification": "full_text"
+          }
+        },
+        {
+          "date": "2026-11-30",
+          "stage": "scheduled",
+          "text": "公告规定新下限自这一天施行。券商可按新规重算未了结合约的保证金可用余额。",
+          "source": {
+            "name": "上交所正式通知及生效条款",
+            "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20261122_10838633.shtml",
+            "verification": "full_text"
+          }
+        },
+        {
+          "stage": "watch",
+          "text": "新规实施后，比较实施前后的融资买入额与余额，并核对券商实际要求。截至本期，实际新增融资与市场影响仍待数据验证。",
+          "source": {
+            "name": "上交所每日融资融券数据",
+            "url": "https://star.sse.com.cn/services/tradingservice/margin/home/",
+            "verification": "full_text"
+          }
+        }
+      ],
       "sources": [
         {
           "name": "上交所：三所调整融资保证金比例的官方说明",
