@@ -1,0 +1,304 @@
+{
+  "date": "2026-11-23",
+  "windowStart": "2026-11-22T22:00:00+08:00",
+  "windowEnd": "2026-11-23T22:00:00+08:00",
+  "backfilled": true,
+  "outlook": "A股成长板块与美股盘前期货回升，市场情绪有所修复，但韩国科技股仍弱、海湾航运风险尚存，反弹能否延续还要看美股正式交易。",
+  "coverageNote": "本期于11月24日补发，仍只覆盖北京时间11月22日22:00后至23日22:00。A股采用已公布的周一收盘；当期截点对应美东周一09:00，美国常规交易于北京时间22:30才开盘，11月PMI初值安排在22:45，均在本期之外。芝加哥联储月度活动指数只核实到发布安排。油价和美股期货使用各自注明时点的快照。两融仅跟进本期披露的实施细节，并购仍待审批及交割。",
+  "featuredArticleIds": [
+    "20261123-cn-growth-rebound",
+    "20261123-us-futures-rebound",
+    "20261123-cn-margin-risk-followup"
+  ],
+  "items": [
+    {
+      "id": "20261123-cn-growth-rebound",
+      "category": "positive",
+      "markets": ["A股"],
+      "topic": "A股收盘与上涨家数",
+      "publishedAt": "2026-11-23T15:10:42+08:00",
+      "eventAt": "2026-11-23T15:00:00+08:00",
+      "timeLabel": "11/23 A股收盘；中新经纬15:10发布收评",
+      "title": "A股低开高走，创业板指收涨3.08%",
+      "summary": "周一创业板指涨3.08%、上证指数涨0.15%，全市场逾4600只个股上涨，显示A股风险偏好回暖。",
+      "analysis": "深证成指也上涨1.93%，沪深两市成交额约1.55万亿元，较上一交易日增加约1307亿元。机器人等方向领涨，但上证50下跌0.85%，说明个股普涨时部分大盘股仍偏弱。成交额度量交易活跃程度，每笔成交都有买方和卖方。",
+      "knowledge": {
+        "term": "市场宽度",
+        "aliases": ["上涨家数", "个股普涨"],
+        "explanation": "市场宽度描述行情有多少只股票参与，常用上涨和下跌的家数观察。指数按既定规则给成分股分配权重，少数权重很大的股票可以让指数走势与多数股票不同。",
+        "example": "假设100只股票里有80只上涨，但占指数近半权重的几只大股下跌，指数仍可能小跌；对照上涨家数才能看清多数股票的表现。"
+      },
+      "watch": "观察下一交易日上涨家数和成交额能否维持，以及领涨是否延伸到更多行业和大盘股。",
+      "caveat": "这是11月23日已发生的A股收盘。单日上涨无法确认趋势反转，也无法单独归因于11月30日才生效的融资保证金新规。",
+      "sources": [
+        {
+          "name": "中新经纬｜收盘、上涨家数与成交额",
+          "url": "https://www.jwview.com/jingwei/html/11-23/698126.shtml",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T15:10:42+08:00"
+        },
+        {
+          "name": "同花顺金融研究中心｜指数与板块行情",
+          "url": "https://news.10jqka.com.cn/20261123/c682101377.shtml",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T15:30:06+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261123-us-futures-rebound",
+      "category": "positive",
+      "markets": ["美股", "A股"],
+      "topic": "美股盘前与科技板块情绪",
+      "publishedAt": "2026-11-23T12:26:33Z",
+      "eventAt": "2026-11-23T12:00:00Z",
+      "timeLabel": "11/23 美东07:00期货快照，北京时间20:00",
+      "title": "美股盘前反弹，纳指100期货一度涨3.5%",
+      "summary": "路透报道美东早上7点纳指100期货涨3.5%、标普500期货涨2.8%，显示科技股抛售后的风险情绪有所缓和。",
+      "analysis": "纳指100和标普500期货同时上涨，说明反弹同时出现在科技股权重较高的指数期货和更广的市场基准期货中。如果反弹在现货开盘后延续，后续亚洲科技股可能获得情绪支撑。A股周一已经收盘，美股盘前报价不能解释当天A股走势。",
+      "knowledge": {
+        "term": "股指期货",
+        "aliases": ["纳指100期货", "标普500期货"],
+        "explanation": "股指期货是以某个股票指数为标的的交易合约，在股票常规开盘前也可以交易。价格会反映当时市场对指数的预期，并随新消息变化。",
+        "example": "假设某指数期货开盘前涨2%，随后现货市场接到新的数据，指数开盘只涨0.5%，甚至可以转跌。两者衡量的是不同时点的市场。"
+      },
+      "watch": "观察美股正式开盘后涨幅能否维持、半导体股是否同步，以及回升是否扩展到科技板块之外。",
+      "caveat": "报价为路透12:00 UTC的快照，报道转载时间为12:26 UTC，均早于北京时间22:00。美东为冬令时，常规开盘在北京时间22:30，本期没有当天美股现货收盘。",
+      "sources": [
+        {
+          "name": "路透／Yahoo News｜明确标注12:00 UTC的期货快照",
+          "url": "https://malaysia.news.yahoo.com/us-futures-bounce-while-asia-234419517.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T12:26:33Z"
+        }
+      ]
+    },
+    {
+      "id": "20261123-cn-margin-risk-followup",
+      "category": "neutral",
+      "markets": ["A股"],
+      "topic": "两融风控与券商执行",
+      "publishedAt": "2026-11-23T16:11:20+08:00",
+      "timeLabel": "11/23 新华财经16:11转载证券时报，财联社20:36补充",
+      "title": "两融新规后续：媒体披露券商追保与平仓安排",
+      "summary": "证券时报和财联社报道，监管通知允许券商在市场波动时经客户确认动态调整追保与平仓安排，可能减轻集中卖出的冲击。",
+      "analysis": "11月22日的交易所公告决定把融资买入的保证金下限降至80%，11月30日才生效。今天新披露的是持仓期间的执行细节，包括对大额授信与异常交易的风控，以及券商在充分沟通并取得客户确认后调整追保和平仓的安排，可能使处置节奏更平缓。",
+      "knowledge": {
+        "term": "维持担保比例",
+        "aliases": ["最低维持担保比例"],
+        "explanation": "维持担保比例衡量持仓期间信用账户的担保物价值能覆盖多少债务。跌到券商约定的水平时，投资者可能需要补充担保物或归还部分债务，否则券商可依约卖出持仓。融资保证金比例管开仓，维持担保比例管持仓后的风险。",
+        "example": "假设账户担保物值150元、债务100元，简化后的比例是150%；担保物跌到120元时比率降至120%。是否需要补担保物，要看账户约定的触发线。"
+      },
+      "watch": "关注券商正式对客通知、适用范围与合同安排，并比较11月30日后融资余额和市场波动的变化。",
+      "caveat": "本期读到的是媒体对发给券商的通知的报道，未取得这份通知原文。可动态调整属于有条件的安排，具体条款及券商执行仍待确认，交易所80%的新下限尚未生效。",
+      "timeline": [
+        {
+          "date": "2026-11-22",
+          "stage": "announcement",
+          "text": "交易所公告将融资买入保证金比例下限由100%降至80%，注明未来生效时间。",
+          "source": {
+            "name": "上交所｜融资保证金比例正式通知",
+            "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20261122_10838633.shtml",
+            "verification": "full_text"
+          },
+          "article": {"date": "2026-11-22", "id": "20261122-china-financing-margin-rule"}
+        },
+        {
+          "date": "2026-11-23",
+          "stage": "announcement",
+          "text": "媒体披露监管向券商下发的实施要求，涉及大额授信、异常交易，以及经客户确认后调整追保和平仓安排。",
+          "source": {
+            "name": "财联社｜券商两融执行细节",
+            "url": "https://www.cls.cn/detail/2542131",
+            "verification": "full_text"
+          }
+        },
+        {
+          "date": "2026-11-30",
+          "stage": "scheduled",
+          "text": "交易所公告规定的融资保证金新下限生效日。",
+          "source": {
+            "name": "上交所｜生效条款",
+            "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20261122_10838633.shtml",
+            "verification": "full_text"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "name": "证券时报／新华财经｜监管通知的执行口径",
+          "url": "https://www.cnfin.com/gs-lb/detail/20261123/4499055_1.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T16:11:20+08:00"
+        },
+        {
+          "name": "财联社｜两融授信、追保与平仓细节",
+          "url": "https://www.cls.cn/detail/2542131",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T20:36:00+08:00"
+        },
+        {
+          "name": "上交所｜11月22日交易所规则及生效条款",
+          "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/specific/margin/c/c_20261122_10838633.shtml",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261123-korea-chip-selloff",
+      "category": "negative",
+      "markets": ["A股", "美股"],
+      "topic": "韩国股市、芯片与韩元",
+      "publishedAt": "2026-11-23T16:03:44+09:00",
+      "eventAt": "2026-11-23T15:30:00+09:00",
+      "timeLabel": "11/23 韩国15:30收盘，北京时间14:30",
+      "title": "韩国KOSPI下跌3.31%，芯片龙头继续承压",
+      "summary": "韩国KOSPI收跌3.31%，三星电子和SK海力士下跌、韩元走弱，显示亚洲芯片股的抛售压力尚未消退。",
+      "analysis": "韩联社报道KOSPI收于4,708.54点，三星电子跌3.06%，SK海力士跌2.52%。当地15:30，一美元可兑换1,345.9韩元，上一交易日收盘为1,336.2韩元。韩元走弱与股价下跌同时发生，对未做汇率对冲的美元投资者而言，两者都可能拖累以美元计价的收益。",
+      "knowledge": {
+        "term": "汇率风险",
+        "explanation": "持有海外资产时，实际收益同时受当地股价和兑换汇率影响。用一美元能换到更多韩元，表示韩元对美元走弱；把同一笔韩元换回美元时，得到的美元会变少。",
+        "example": "假设一笔韩股持仓价值10万韩元，股价未动，汇率从每美元1,000韩元变为1,250韩元，换回的美元会从100美元降到80美元。"
+      },
+      "watch": "关注韩国科技龙头、韩元和外资交易方向是否一同企稳，以及韩国此前提出的稳市准备是否出现可核实的执行。",
+      "caveat": "KOSPI为当天收盘，汇率是韩联社记录的当地15:30报价。韩国市场的走势只能提供区域情绪线索，无法据此判断A股或美股芯片股必然同向。",
+      "sources": [
+        {
+          "name": "韩联社｜KOSPI、芯片个股与韩元报价",
+          "url": "https://en.yna.co.kr/view/AEN20261123006651320",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T16:03:44+09:00"
+        }
+      ]
+    },
+    {
+      "id": "20261123-crowdstrike-zscaler",
+      "category": "neutral",
+      "markets": ["美股"],
+      "topic": "网络安全行业并购",
+      "publishedAt": "2026-11-23T13:05:00Z",
+      "timeLabel": "11/23 公司公告；AP报道时间为美东08:05",
+      "title": "CrowdStrike拟以全股票交易收购Zscaler",
+      "summary": "CrowdStrike与Zscaler宣布约439亿美元的全股票并购协议，若获批交割，可能重塑美股网络安全行业竞争格局。",
+      "analysis": "双方已经签署协议，按11月20日CrowdStrike收盘价计算交易企业价值约439亿美元；每股Zscaler股票拟换取1.135股CrowdStrike普通股。两家的网络与终端安全产品可望合并销售，但实际节省多少成本、客户是否愿意采用合并后的产品，要等整合才能知道。",
+      "knowledge": {
+        "term": "全股票并购",
+        "aliases": ["全股票交易", "换股比例"],
+        "explanation": "买方用自己的股票支付收购对价，目标公司的股东若完成换股，就成为合并后公司的股东。固定换股比例下，买方股价变化也会改变目标股东收到的股票价值。",
+        "example": "假设每股目标股票可换1.135股买方股票，买方股价为100美元时，对应113.50美元；跌到80美元时，对应90.80美元。这个例子只演示换股，未计算交易中的其他项目。"
+      },
+      "watch": "关注Zscaler股东投票、监管审批、实际交割时间，以及交割后客户留存和每股现金流。",
+      "caveat": "批准协议的是两家公司董事会，交割仍需Zscaler股东、监管部门等同意。439亿美元是公告口径的估值，协同效应是管理层预期；时间采用AP报道的公开时间，公司公告没有给出精确首发分钟。",
+      "sources": [
+        {
+          "name": "CrowdStrike｜联合公告、估值、换股比例及交割条件",
+          "url": "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-to-acquire-zscaler-bringing-network-security-and-zero-trust-to-the-falcon-platform/",
+          "verification": "full_text"
+        },
+        {
+          "name": "SEC EDGAR｜并购协议披露",
+          "url": "https://www.sec.gov/Archives/edgar/data/1713683/000110465926130801/tm2630454d2_425.htm",
+          "verification": "full_text"
+        },
+        {
+          "name": "美联社｜盘前公告报道",
+          "url": "https://apnews.com/article/crowdstrike-zscaler-cybersecurity-ai-artificial-intelligence-cf5a66aaa14f98763eabfb767ff8727c",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T13:05:00Z"
+        }
+      ]
+    },
+    {
+      "id": "20261123-pboc-overnight-liquidity",
+      "category": "neutral",
+      "markets": ["A股"],
+      "topic": "央行公开市场操作",
+      "publishedAt": "2026-11-23T15:31:15+08:00",
+      "timeLabel": "11/23 央行操作；新华财经15:31核算净投放",
+      "title": "央行操作4995亿元隔夜逆回购，当天净投放1200亿元",
+      "summary": "央行以1.25%的利率开展4995亿元隔夜逆回购，扣除到期后的1200亿元净投放有助缓冲月末短期资金需求。",
+      "analysis": "财联社上午报道操作量和利率，新华财经扣除当日3795亿元逆回购到期后得出净投放。当天操作改善的是金融机构短期可用资金，本周还有政府债券缴款和中期借贷便利到期，过去一天的操作量不足以判断整周资金松紧。",
+      "knowledge": {
+        "term": "隔夜逆回购",
+        "aliases": ["逆回购到期", "净投放"],
+        "explanation": "央行通过隔夜逆回购向金融机构提供期限很短的资金，到期后资金收回。比较投放和到期规模，就能知道这种操作当天净增加还是净收回资金。",
+        "example": "假设央行当天投放50亿元，同时有38亿元到期收回，隔夜逆回购口径的净投放就是12亿元；下一天还要重新看新操作和到期量。"
+      },
+      "watch": "观察跨月短期资金利率、后续公开市场投放和中期借贷便利续作公告，判断缓冲是否持续。",
+      "caveat": "1.25%是本次操作利率，1200亿元是当日逆回购操作的净额；它们无法代表所有机构的借钱成本或流入股市的资金。",
+      "sources": [
+        {
+          "name": "财联社｜隔夜逆回购操作量与利率",
+          "url": "https://www.cls.cn/detail/2541182",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T09:23:24+08:00"
+        },
+        {
+          "name": "新华财经｜当日到期量与跨月资金观察",
+          "url": "https://www.cnfin.com/hb-lb/detail/20261123/4499017_1.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-23T15:31:15+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261123-oil-supply-hormuz",
+      "category": "neutral",
+      "markets": ["A股", "美股"],
+      "topic": "原油期货与航运风险",
+      "publishedAt": null,
+      "eventAt": "2026-11-23T12:56:00Z",
+      "timeLabel": "11/23 北京时间20:56油价快照",
+      "title": "布伦特油价盘中回落，海湾航运风险仍在",
+      "summary": "路透报道布伦特原油期货盘中跌1.43%至91.25美元，油价下降可能缓解用油企业的成本压力，但航运风险仍可能推高价格。",
+      "analysis": "路透报道中东供应改善对油价形成压力，海湾附近的航运安全问题仍令投资者担心供货中断。同期美国WTI原油期货跌1.37%至82.27美元。相同的油价变化对上游生产商和燃油使用者有不同影响，企业的长期合同或套期保值也会改变实际影响。",
+      "knowledge": {
+        "term": "原油风险溢价",
+        "aliases": ["原油风险溢价"],
+        "explanation": "当市场担心未来运不出油时，买方可能愿意支付更高价格来锁定供应。由这种不确定性带来的额外价格压力通常称为风险溢价，其幅度并不能从某一天的油价直接分离出来。",
+        "example": "假设正常情况下原油值每桶80美元，在运输可能中断时买家愿意付85美元，多出的5美元可以理解为对断供风险的定价；如果实际供应同时增加，总油价仍可以下跌。"
+      },
+      "watch": "观察海湾油运流量、供应中断是否得到证实，以及产油国的产量决定和下一阶段期货报价。",
+      "caveat": "报价取自路透在截止前的12:56 UTC盘中快照，非期货结算价或22:00现价；供应改善是路透对当时行情的解释，航运状况仍待后续数据验证。",
+      "sources": [
+        {
+          "name": "路透／泛欧交易所｜12:56 UTC油价与供给报道",
+          "url": "https://live.euronext.com/en/financial-news/oil-falls-increased-middle-eastern-supplies",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261123-eurozone-flash-pmi",
+      "category": "neutral",
+      "markets": ["A股", "美股"],
+      "topic": "欧洲经济与外需",
+      "publishedAt": null,
+      "eventAt": "2026-11-23T10:00:00+01:00",
+      "timeLabel": "11/23 中欧时间10:00发布初值，北京时间17:00",
+      "title": "欧元区综合PMI初值持平，德国与法国走势分化",
+      "summary": "欧元区11月综合PMI初值持平于51.7，德国扩张加快而法国收缩加深，为A股与美股出口企业提供了分化的外需信号。",
+      "analysis": "标普全球的企业调查显示，欧元区整体仍在扩张，但德国尤其是制造业表现较强，法国国内需求偏弱。对把产品或服务卖到欧洲的企业，客户所在地与所处行业比欧元区总数更有解释力；对利率判断还要结合通胀等实际数据。",
+      "knowledge": {
+        "term": "采购经理指数（PMI）",
+        "aliases": ["综合PMI", "PMI初值", "PMI"],
+        "explanation": "PMI来自企业对生产、订单或经营情况的定期问卷，50是与上月相比大体无变化的分界。综合PMI结合制造业与服务业的产出指标，初值通常还会用更多答卷修订。",
+        "example": "假设上月PMI为52、本月为51，两个读数都高于50，说明受访企业的经营活动总体仍在扩张，但本月扩张信号减弱；51也不代表产出增长了1%。"
+      },
+      "watch": "关注11月终值、新出口订单以及企业对欧洲需求的指引，核对调查信号是否转化为实际订单。",
+      "caveat": "这是标普全球已发布的初步调查结果，发布时间有发布日历及同期报道互证，经济增长和央行决策仍须等各自的正式数据和公告。",
+      "sources": [
+        {
+          "name": "标普全球｜欧元区、德国与法国初值解读",
+          "url": "https://www.spglobal.com/market-intelligence/en/news-insights/research/2026/11/steady-eurozone-flash-pmi-masks-widening-growth-disparities",
+          "verification": "full_text"
+        },
+        {
+          "name": "路透／泛欧交易所｜当日初值报道",
+          "url": "https://live.euronext.com/en/financial-news/euro-zone-growth-holds-steady-frances-deepening-downturn-clouds-outlook-pmi-shows",
+          "verification": "full_text"
+        }
+      ]
+    }
+  ]
+}
