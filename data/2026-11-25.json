@@ -1,0 +1,342 @@
+{
+  "date": "2026-11-25",
+  "windowStart": "2026-11-24T22:00:00+08:00",
+  "windowEnd": "2026-11-25T22:00:00+08:00",
+  "backfilled": false,
+  "outlook": "A股和上一交易日的美股科技板块走弱，新的关税提案与偏高的美国通胀叠加，市场风险偏好继续承压。",
+  "coverageNote": "本期只收录北京时间11月24日22:00后至25日22:00已公开的信息。美东周二收盘在北京时间周三05:00；周三截点为美东09:00，尚未开盘，08:30发布的美国GDP和PCE已经纳入。美股周三期货是数据公布前的快照。央行资金净投放按是否计入国库现金定存到期区分口径，新的关税税率和生效安排仍按提案处理。",
+  "featuredArticleIds": [
+    "20261125-china-stocks-broad-selloff",
+    "20261125-us-gdp-pce",
+    "20261125-us-trade-tariff-proposal"
+  ],
+  "items": [
+    {
+      "id": "20261125-china-stocks-broad-selloff",
+      "category": "negative",
+      "markets": [
+        "A股"
+      ],
+      "topic": "A股收盘与科技板块",
+      "publishedAt": "2026-11-25T15:13:21+08:00",
+      "eventAt": "2026-11-25T15:00:00+08:00",
+      "timeLabel": "11/25 A股15:00收盘，中新经纬15:13发布",
+      "title": "A股集体走弱，创业板指收跌4.19%",
+      "summary": "沪指下跌2.03%、创业板指下跌4.19%，半导体领跌且全市场逾4900只股票下跌，显示A股风险偏好走弱。",
+      "analysis": "深成指跌3.24%，科创50跌5.12%。沪深两市成交额约1.38万亿元，较上一交易日减少约2720亿元，部分零售和医药商业股票逆势走强。指数、行业和上涨下跌家数一起看，可以分辨这是少数大股拖累，还是多数个股承压。",
+      "knowledge": {
+        "term": "市场宽度",
+        "aliases": [
+          "涨跌家数"
+        ],
+        "explanation": "市场宽度看有多少股票参与上涨或下跌。指数常常更受大公司影响，涨跌家数则对每只股票一视同仁。",
+        "example": "假设100只股票中有90只下跌，只有几只权重较大的股票上涨，即使指数跌得很少，多数股票的表现仍偏弱。"
+      },
+      "watch": "观察后续下跌家数是否减少，以及半导体与较强的零售、医药板块是否继续分化。",
+      "caveat": "行情为11月25日A股收盘，个股下跌家数采用中新经纬口径。一日跌幅和成交额无法确定抛售原因、资金净流向或后续走势。",
+      "sources": [
+        {
+          "name": "中新经纬／新浪财经｜收盘、成交额及涨跌家数",
+          "url": "https://finance.sina.com.cn/roll/2026-11-25/doc-inizxtsm4286626.shtml",
+          "verification": "full_text",
+          "publishedAt": "2026-11-25T15:13:21+08:00",
+          "updatedAt": "2026-11-25T15:37:18+08:00"
+        },
+        {
+          "name": "同花顺｜当日指数和行业复盘",
+          "url": "https://news.10jqka.com.cn/20261125/c682198110.shtml",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261125-us-gdp-pce",
+      "category": "neutral",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "美国经济增速与通胀",
+      "publishedAt": "2026-11-25T08:30:00-05:00",
+      "timeLabel": "美东11/25 08:30发布，北京时间21:30",
+      "title": "美国三季度GDP增速上修，10月核心PCE通胀升至3.3%",
+      "summary": "美国三季度实际GDP年化增速由3.4%上修至4.3%，10月核心PCE价格同比升至3.3%，增长较强与通胀偏高同时出现，使利率前景仍有不确定性。",
+      "analysis": "美国经济分析局上修的是已过去的三季度，实际GDP已剔除价格变化。10月总PCE价格指数同比涨3.8%，核心PCE同比由9月的3.1%升至3.3%，两项月环比均为0.3%。10月扣除价格后的消费支出接近持平，说明较强的三季度增长和较弱的单月消费可以同时存在。",
+      "knowledge": {
+        "term": "核心PCE价格指数",
+        "aliases": [
+          "核心PCE价格",
+          "核心PCE"
+        ],
+        "explanation": "PCE价格指数衡量美国居民消费整体价格变化，核心口径剔除波动较大的食品和能源，更容易观察其他支出的价格趋势。同比是跟去年同月比，环比是跟上月比。",
+        "example": "假设核心PCE价格指数去年10月为100、今年10月为103.3，意味着同比上涨3.3%，并不表示每种商品都涨3.3%。"
+      },
+      "watch": "关注下一次利率决议怎样解读增长与通胀，并看后续实际消费和价格数据能否延续这一组合。",
+      "caveat": "GDP为第二次估计，4.3%是把一个季度的增速折算成年率。10月PCE同比属于不同时间范围，两数不能直接相减，也无法由此确认美联储下一步决定。",
+      "sources": [
+        {
+          "name": "美国经济分析局｜三季度GDP第二次估计",
+          "url": "https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-3rd-quarter-2026",
+          "verification": "full_text",
+          "publishedAt": "2026-11-25T08:30:00-05:00"
+        },
+        {
+          "name": "美国经济分析局｜10月个人收入、支出和PCE价格",
+          "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-october-2026",
+          "verification": "full_text",
+          "publishedAt": "2026-11-25T08:30:00-05:00"
+        },
+        {
+          "name": "美联社｜核心PCE与上月同比对照",
+          "url": "https://apnews.com/article/consumer-spending-prices-inflation-tariffs-31fab1e32dda1ad3a29c192f620d5733",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261125-us-trade-tariff-proposal",
+      "category": "negative",
+      "markets": [
+        "A股",
+        "美股"
+      ],
+      "topic": "贸易政策与进口成本",
+      "publishedAt": "2026-11-25T13:35:04Z",
+      "timeLabel": "路透11/25 13:35 UTC版本，北京时间21:35",
+      "title": "美方提出新一轮关税方案，覆盖中国等贸易伙伴",
+      "summary": "路透报道美国政府拟对中国商品加征20%的额外关税，也拟调整其他贸易伙伴税率，可能提高相关企业的进口成本和订单不确定性。",
+      "analysis": "路透和Axios报道，这一方案来自美国对部分贸易伙伴产业政策的301调查，拟议税率和能否与已有税率叠加因经济体和货物范围而异。进口企业可能自行承担一部分成本、转嫁给消费者或与供应商重新议价。中国外交部公开表示反对以产能问题为由采取此类措施。",
+      "knowledge": {
+        "term": "关税成本传导",
+        "explanation": "关税通常由进口环节缴纳，最后谁实际承担成本由合同和市场条件共同决定。进口商可以压缩利润，也可能调高售价或要求供应商降低报价。",
+        "example": "假设一种货物的计税价格为100元，附加税率为20%，只有在该货物适用且暂不计其他税费时才会多出20元；零售价不一定就多20元。"
+      },
+      "watch": "留意美国贸易代表办公室的正式文件、商品及豁免范围、公众意见程序和最终生效日期。",
+      "caveat": "20%是媒体报道的提议税率。部分货物可能例外，最终文本、起征日期及各类商品的叠加规则仍须核实。报道所述影响属于推断。",
+      "highlights": [
+        "拟对中国商品加征20%的额外关税",
+        "可能提高相关企业的进口成本和订单不确定性"
+      ],
+      "sources": [
+        {
+          "name": "路透／Yahoo News｜方案范围、税率和中方回应",
+          "url": "https://malaysia.news.yahoo.com/us-proposes-tariffs-14-trading-131826582.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-25T13:35:04Z"
+        },
+        {
+          "name": "Axios｜拟议税率及意见程序",
+          "url": "https://www.axios.com/2026/11/25/trump-tariffs-china",
+          "verification": "full_text",
+          "publishedAt": "2026-11-25T13:41:15Z"
+        }
+      ]
+    },
+    {
+      "id": "20261125-us-tech-pullback",
+      "category": "negative",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "美股周二收盘与周三盘前",
+      "publishedAt": null,
+      "eventAt": "2026-11-24T16:00:00-05:00",
+      "timeLabel": "美东11/24 16:00收盘，北京时间11/25 05:00",
+      "title": "美股周二科技板块走弱，道指与纳指分化",
+      "summary": "美东周二纳斯达克综合指数跌约1.5%、标普500跌0.5%，道指涨约0.9%，显示科技股承压时美股各板块表现分化。",
+      "analysis": "美联社报道，科技股拖累纳指，标普500录得最近九个交易日中的第八次下跌。另据路透，美东周三06:01纳指100期货跌2.38%，是下一交易日的盘前快照，早于GDP及通胀发布。",
+      "knowledge": {
+        "term": "指数成分股",
+        "aliases": [
+          "成分股"
+        ],
+        "explanation": "成分股是被某个指数纳入计算的股票。指数选择的公司、行业分布和计算权重各不相同，所以同一天可能有的上涨，有的下跌。",
+        "example": "假设指数甲一半权重来自科技股，指数乙主要是消费和金融股，科技股走弱时甲可能跌得更多，即使乙仍微涨。"
+      },
+      "watch": "观察下一个美股正式收盘时科技股与其他板块的涨跌分布，以及盘前波动是否延续。",
+      "caveat": "周二正式收盘和周三期货属于两个时段与品种。周三盘前报价反映数据发布前的状态，无法用来判断21:30数据的市场反应。",
+      "sources": [
+        {
+          "name": "美联社｜美东周二三个指数的正式收盘",
+          "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-6cc4e580290aadf304ee316d6d46dd81",
+          "verification": "full_text"
+        },
+        {
+          "name": "路透｜美东周三06:01的盘前期货快照",
+          "url": "https://www.investing.com/news/economy-news/nasdaq-futures-slide-over-2-on-fresh-us-tariff-concerns-inflation-data-in-focus-5050138",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261125-pboc-executed-liquidity",
+      "category": "neutral",
+      "markets": [
+        "A股"
+      ],
+      "topic": "央行实际操作与资金到期",
+      "publishedAt": "2026-11-25T16:06:25+08:00",
+      "timeLabel": "11/25 央行已执行操作，新华财经16:06盘后汇总",
+      "title": "央行长短期操作落地，短期资金补充而MLF缩量续作",
+      "summary": "央行开展6170亿元隔夜逆回购、5000亿元7天逆回购和8000亿元一年期MLF，缓冲了短期资金需求，同时一年期MLF单项净回笼2000亿元。",
+      "analysis": "只统计逆回购和MLF，当日净投放4010亿元。新华财经把800亿元到期的国库现金定存也计入流动性变化，得到3210亿元。两数相差800亿元，来自纳入的项目不同。短期资金增加和一年期资金减少可以同时发生。",
+      "knowledge": {
+        "term": "资金期限结构",
+        "explanation": "资金期限结构描述不同到期期限的资金各有多少。短期资金适合周转，较长期资金可以稳定更长一段时间；只看合计金额容易忽略这种差别。",
+        "example": "假设银行多拿到7天资金50亿元，同时偿还一年期资金20亿元，合计多了30亿元，但增加的全是短期资金。"
+      },
+      "watch": "观察跨月后银行间短期资金利率，以及之后较长期资金工具的操作规模。",
+      "caveat": "这里的金额是银行体系资金操作。4010亿元不含国库现金定存到期，3210亿元含该项，两数都不能当作股票资金净流入。",
+      "sources": [
+        {
+          "name": "新华财经｜三项操作、资金到期和3210亿元口径",
+          "url": "https://www.cnfin.com/zs-lb/detail/20261125/4500128_1.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-25T16:06:25+08:00"
+        },
+        {
+          "name": "财联社／搜狐｜4010亿元口径与计算依据",
+          "url": "https://www.sohu.com/a/1106286007_222256",
+          "verification": "full_text",
+          "publishedAt": "2026-11-25T17:03:00+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261125-dell-ai-results",
+      "category": "positive",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "AI服务器财报与待交付订单",
+      "publishedAt": "2026-11-24T16:05:00-05:00",
+      "timeLabel": "美东11/24 16:05发布，北京时间11/25 05:05",
+      "title": "戴尔营收创新高，上调全年收入指引",
+      "summary": "戴尔第三财季营收达549亿美元、同比增103%，并上调全年收入指引，为AI服务器需求提供了一项正面证据。",
+      "analysis": "戴尔披露当季AI优化服务器收入220亿美元，期末相关待交付订单1323亿美元。管理层将本财年总收入指引由1920亿美元上调至2020亿美元。已交付确认的收入和仍要交付的订单处于不同阶段，交货和客户预算都会影响订单转成收入的速度。",
+      "knowledge": {
+        "term": "待交付订单",
+        "explanation": "待交付订单指已经列入订单记录、但商品或服务还未交付的部分。它能提示未来需要交多少货，实际收入何时确认仍要看履约和会计条件。",
+        "example": "假设厂商接到100万元的服务器订单，本季交付并确认40万元，其余60万元仍是待交付订单，未来还要按约履行。"
+      },
+      "watch": "关注后续服务器交付、客户采购变化以及公司确认的实际收入和利润率。",
+      "caveat": "本季收入属于已报告的财务结果，全年指引是管理层预测。公司订单也无法代表整个AI供应链或个股的价格表现。",
+      "sources": [
+        {
+          "name": "戴尔投资者关系｜第三财季业绩与全年指引",
+          "url": "https://investors.delltechnologies.com/sec-filings/all-sec-filings/content/0001571996-26-000050/exhibit991earnings8kq3fy27.htm",
+          "verification": "full_text"
+        },
+        {
+          "name": "戴尔投资者关系｜发布档案与美东时间",
+          "url": "https://investors.delltechnologies.com/news-events/press-releases",
+          "verification": "full_text",
+          "publishedAt": "2026-11-24T16:05:00-05:00"
+        }
+      ]
+    },
+    {
+      "id": "20261125-us-consumer-confidence",
+      "category": "positive",
+      "markets": [
+        "美股"
+      ],
+      "topic": "美国消费者调查",
+      "publishedAt": "2026-11-24T10:00:00-05:00",
+      "timeLabel": "美东11/24 10:00发布，北京时间11/24 23:00",
+      "title": "美国11月消费者信心指数升至103.3",
+      "summary": "美国经济咨商会公布11月消费者信心指数从91.9升至103.3，消费者对就业和经营环境看法改善，为消费需求提供了偏正面的信号。",
+      "analysis": "当期状况指数升至132.8，预期指数升至83.6。发布机构认为选举不确定性下降可能有所影响，调查还记录了居民对就业的看法改善。调查衡量人们怎么想，实际消费还受收入、借贷成本和物价影响。",
+      "knowledge": {
+        "term": "消费者信心指数",
+        "explanation": "这是把居民对当前经济和未来前景的问卷答案换算成的指数。经济咨商会以1985年为100作为比较基准，数值单位是指数点。",
+        "example": "假设指数从90升至100，是提高了10个指数点；同期间居民实际花费可以变化很小。"
+      },
+      "watch": "用后续零售销售和实际消费支出检验信心改善是否转化为购买。",
+      "caveat": "这是11月1日至17日的初步调查，和10月实际消费支出在月份及统计方法上不同，未给出未来消费增幅。",
+      "sources": [
+        {
+          "name": "美国经济咨商会｜11月调查与分项数据",
+          "url": "https://www.conference-board.org/topics/consumer-confidence/",
+          "verification": "full_text"
+        },
+        {
+          "name": "美国经济咨商会／PR Newswire｜当期发布稿与时点",
+          "url": "https://finance.yahoo.com/economy/articles/us-consumer-confidence-surged-november-150000124.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-24T10:00:00-05:00"
+        }
+      ]
+    },
+    {
+      "id": "20261125-japan-services-prices",
+      "category": "neutral",
+      "markets": [
+        "A股",
+        "美股"
+      ],
+      "topic": "日本企业服务价格与利率预期",
+      "publishedAt": "2026-11-24T23:41:00-05:00",
+      "timeLabel": "11/25 日银数据，路透北京时间12:41发稿",
+      "title": "日本10月企业间服务价格同比上涨4.2%",
+      "summary": "日本央行公布的10月企业间服务价格同比涨4.2%，高于9月修订后的3.8%，可能强化市场对日本利率前景的关注。",
+      "analysis": "这一价格指数看企业向其他企业购买服务时支付的价格，较快上涨可能让人重新评估服务成本压力。若后续日本利率预期变化，也可能经日元和全球资金成本影响两市，但汇率还同时受美国利率预期和市场情绪影响。",
+      "knowledge": {
+        "term": "企业间服务价格指数",
+        "explanation": "它跟踪企业之间交易的服务价格，例如运输和部分专业服务。消费者物价指数跟踪居民购买的商品与服务，两者观察对象不同。",
+        "example": "假设一家企业支付的专业服务费用上涨5%，而它暂时维持零售价，企业间服务价格上涨未必立刻反映到居民账单上。"
+      },
+      "watch": "关注日本消费者通胀、工资与央行会议，分辨企业价格变化是否向家庭价格传递。",
+      "caveat": "4.2%是日本央行公布的10月初值。发布时间引用已核实的路透报道时点，汇率或政策方向还需要独立证据。",
+      "sources": [
+        {
+          "name": "日本央行｜10月企业间服务价格初值及历史对照",
+          "url": "https://www.boj.or.jp/en/statistics/pi/cspi_release/sppi2610.pdf",
+          "verification": "full_text"
+        },
+        {
+          "name": "路透／MarketScreener｜日银数据与汇率背景",
+          "url": "https://www.marketscreener.com/news/dollar-takes-breather-before-key-inflation-reading-aussie-slumps-ce7851dbde89f426",
+          "verification": "full_text",
+          "publishedAt": "2026-11-24T23:41:00-05:00"
+        }
+      ]
+    },
+    {
+      "id": "20261125-huawei-jury-verdict",
+      "category": "negative",
+      "markets": [
+        "A股",
+        "美股"
+      ],
+      "topic": "科技供应链与企业合规",
+      "publishedAt": "2026-11-24T20:20:35Z",
+      "timeLabel": "美东11/24 陪审团裁决，AP北京时间11/25 04:20报道",
+      "title": "美国陪审团对华为及三家子公司作出有罪裁决",
+      "summary": "美国联邦陪审团就多项指控对华为及三家子公司作出有罪裁决，可能增加相关科技供应链的合规不确定性。",
+      "analysis": "美国司法部通报，裁决涉及华为及三家子公司，包括串谋窃取商业秘密、银行欺诈及电信欺诈等不同罪名，各实体对应的罪名并不完全相同。华为的律师告诉美联社，公司将上诉。供应商是否调整业务或合同，要等各方进一步披露。",
+      "knowledge": {
+        "term": "合规风险",
+        "explanation": "合规风险指企业因法律、监管规则或合同义务问题面临的损失或经营限制。风险可能来自自身业务，也可能来自与合作伙伴的交易。",
+        "example": "假设某供应商的重要客户面临新的合规审查，双方在重新审查合同期间可能暂缓订单；是否减少订单取决于审查结果。"
+      },
+      "watch": "关注法院后续裁定、公司回应，以及供应商是否披露具体合同或业务调整。",
+      "caveat": "已公开的是陪审团裁决，未核实最终处罚金额或新的订单限制。与相关企业存在供应链联系的上市公司受到多大影响仍不确定。",
+      "sources": [
+        {
+          "name": "美国司法部纽约东区｜裁决及涉及的法人",
+          "url": "https://www.justice.gov/usao-edny/pr/chinese-telecommunications-conglomerate-huawei-and-subsidiaries-convicted-sanctions",
+          "verification": "full_text"
+        },
+        {
+          "name": "美联社｜陪审团裁决报道",
+          "url": "https://apnews.com/article/huawei-racketeering-trial-verdict-b39ac780e2e31140015a1be02f0329ab",
+          "verification": "full_text",
+          "publishedAt": "2026-11-24T20:20:35Z"
+        }
+      ]
+    }
+  ]
+}
