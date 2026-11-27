@@ -1,0 +1,377 @@
+{
+  "date": "2026-11-27",
+  "windowStart": "2026-11-26T22:00:00+08:00",
+  "windowEnd": "2026-11-27T22:00:00+08:00",
+  "backfilled": false,
+  "outlook": "A股科技板块领涨、稳市政策预期升温，美股节后盘前也偏强，油价高位和海外利率仍是需要观察的风险。",
+  "coverageNote": "本期覆盖北京时间11/26 22:00之后至11/27 22:00。美股11/26感恩节休市，11/27正常交易时段于北京时间22:30开始，次日02:00提前结束，因此本期仅列盘前信号。稳市措施的资金规模与执行细节、油市供应变化以及央行下一步决策仍待后续公告或数据验证。",
+  "featuredArticleIds": [
+    "20261127-cn-equities-rebound",
+    "20261127-cn-market-stability-policy",
+    "20261127-us-holiday-futures"
+  ],
+  "items": [
+    {
+      "id": "20261127-cn-equities-rebound",
+      "category": "positive",
+      "markets": [
+        "A股"
+      ],
+      "topic": "A股收盘",
+      "publishedAt": "2026-11-27T15:10:00+08:00",
+      "eventAt": "2026-11-27T15:00:00+08:00",
+      "timeLabel": "11/27 15:00收盘，中新经纬15:10发布（北京时间）",
+      "title": "A股主要指数齐涨，创业板指涨11.61%",
+      "summary": "沪指涨3.73%、深证成指涨7.24%、创业板指涨11.61%，超过5300只股票上涨，显示A股买气明显回暖。",
+      "highlights": [
+        "创业板指涨11.61%",
+        "超过5300只股票上涨"
+      ],
+      "analysis": "半导体、通信设备和软件领涨，全市场成交额约2.02万亿元。多数股票同涨，说明当天的回暖覆盖面较广。科技指数涨幅尤其大，显示市场回暖的力度因板块而异。",
+      "knowledge": {
+        "term": "市场宽度",
+        "aliases": [
+          "涨跌家数"
+        ],
+        "explanation": "市场宽度描述涨跌覆盖多少股票。上涨家数常用来观察行情有多少个股参与，指数涨幅则还受成分股权重影响。",
+        "example": "假设两个交易日指数都涨1%，第一天有八成股票上涨，第二天只有两成上涨，第一天的上涨覆盖面更广。"
+      },
+      "watch": "观察下个交易日上涨家数、成交额和领涨板块是否能延续。",
+      "caveat": "成交额是成交金额，买卖双方每笔交易均有参与，单凭成交放大无法推算净流入，也无法确认涨势会延续。",
+      "sources": [
+        {
+          "name": "中新经纬／北京日报｜收盘指数、成交额与板块表现",
+          "url": "https://xinwen.bjd.com.cn/content/s6b092cf2e4b039a8e2f41b56.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T15:10:00+08:00"
+        },
+        {
+          "name": "每日经济新闻｜收盘与芯片产业链表现",
+          "url": "https://www.nbd.com.cn/articles/2026-11-27/4661224.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T16:45:35+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261127-cn-market-stability-policy",
+      "category": "positive",
+      "markets": [
+        "A股"
+      ],
+      "topic": "资本市场政策",
+      "publishedAt": "2026-11-27T12:46:39+08:00",
+      "timeLabel": "11/27 12:46证监会转载国常会通稿，19:10发布落实安排（北京时间）",
+      "title": "国常会提出强化稳市机制，证监会部署后续工作",
+      "summary": "国常会提出优化中央汇金的类平准基金功能并完善中长期资金入市政策，可能改善A股对稳市支持的预期。",
+      "highlights": [
+        "优化中央汇金的类平准基金功能",
+        "完善中长期资金入市政策"
+      ],
+      "analysis": "会议提出完善保险、企业年金和社保基金入市的支持政策。证监会同日表示将推动拓宽资金来源、渠道和入市方式，并会同有关方面研究新增措施。",
+      "knowledge": {
+        "term": "平准基金",
+        "aliases": [
+          "类平准基金"
+        ],
+        "explanation": "平准基金是用于缓解市场剧烈波动的资金安排，可能在交易失衡时提供买方支持。类平准基金指由现有机构发挥类似作用。",
+        "example": "假设市场短时出现大量卖单而买方不足，负责稳市的机构若增加买入，部分卖单就能更快找到对手方。"
+      },
+      "watch": "看后续操作规则、资金工具使用情况，以及保险等长期机构如何落实入市安排。",
+      "caveat": "通稿与会议部署确认了政策方向，截至截点尚未核实本次安排新增的资金规模、实际买入量或入市时间表。",
+      "sources": [
+        {
+          "name": "证监会转新华社｜国务院常务会议通稿",
+          "url": "https://www.csrc.gov.cn/csrc/c100028/c7673432/content.shtml",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T12:46:39+08:00"
+        },
+        {
+          "name": "证监会｜传达学习贯彻国务院常务会议精神",
+          "url": "https://www.csrc.gov.cn/csrc/c100028/c7673674/content.shtml",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T19:10:03+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261127-us-holiday-futures",
+      "category": "positive",
+      "markets": [
+        "美股"
+      ],
+      "topic": "美股节后盘前",
+      "publishedAt": "2026-11-27T12:47:00Z",
+      "timeLabel": "11/27 美东07:47路透报道，北京时间20:47",
+      "title": "感恩节后美股期指走强，纳指期货领先",
+      "summary": "路透在美股节后开盘前报道纳指期货涨约2.1%、标普500期货涨约1.5%，显示科技股短线情绪回暖。",
+      "highlights": [
+        "纳指期货涨约2.1%",
+        "标普500期货涨约1.5%"
+      ],
+      "analysis": "感恩节休市后的首个交易日，指数期货的涨幅显示部分资金重新关注此前承压的科技股。当天美股缩短交易，盘前和正式交易时段的参与人数与成交情况可能不同。",
+      "knowledge": {
+        "term": "股指期货",
+        "aliases": [
+          "指数期货",
+          "期指"
+        ],
+        "explanation": "股指期货以股票指数为标的，交易时段可与股票现货市场不同。它的变化能反映部分市场参与者对指数的看法。",
+        "example": "假设开盘前某指数期货上涨1%，正式开盘后新消息引来卖盘，当天现货指数仍可能收跌。"
+      },
+      "watch": "看美东09:30开盘后，科技股涨势是否扩展到其他行业，以及13:00提前收盘时能否保住盘前涨幅。",
+      "caveat": "涨幅来自北京时间20:47发布的盘前报道，报价随时会变。美股11月27日正式交易尚未在本期窗口内开始。",
+      "sources": [
+        {
+          "name": "路透／MarketScreener｜11月27日盘前指数期货",
+          "url": "https://uk.marketscreener.com/news/us-futures-rally-on-ai-rebound-after-bruising-month-treasuries-dip-ce7851d9df8bf525",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T12:47:00Z"
+        },
+        {
+          "name": "纽交所｜感恩节休市和次日提前收盘日历",
+          "url": "https://www.nyse.com/trade/hours-calendars",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261127-cn-industrial-profits",
+      "category": "positive",
+      "markets": [
+        "A股"
+      ],
+      "topic": "中国工业盈利",
+      "publishedAt": "2026-11-27T09:31:00+08:00",
+      "timeLabel": "11/27 09:31大河财立方报道统计局数据（北京时间）",
+      "title": "前10个月规上工业利润增长16.0%，10月单月升20.1%",
+      "summary": "前10个月规模以上工业企业利润同比增长16.0%，10月单月增长20.1%，可能改善市场对部分制造业盈利的预期。",
+      "highlights": [
+        "利润同比增长16.0%",
+        "10月单月增长20.1%"
+      ],
+      "analysis": "前10个月计算机、通信和其他电子设备制造业利润约为上年同期的两倍，汽车制造业利润则下降26.0%。总利润改善与行业之间的分化可以同时发生。",
+      "knowledge": {
+        "term": "累计同比",
+        "aliases": [
+          "单月同比"
+        ],
+        "explanation": "累计同比用今年以来数个月的合计值与去年同期合计值比较，单月同比只比某一个月和去年同月。",
+        "example": "假设去年1月、2月的利润都是100元，今年分别是100元和120元，2月单月同比为20%，前两月累计同比为10%。"
+      },
+      "watch": "观察后续利润增长是否从电子等强势行业扩展，以及上市公司的财报能否体现同样趋势。",
+      "caveat": "16.0%按国家统计局可比口径计算，覆盖规模以上工业企业。这个范围包含非上市企业，也有部分行业利润下降。",
+      "sources": [
+        {
+          "name": "福建省工信厅转国家统计局｜工业企业利润原表",
+          "url": "https://gxt.fj.gov.cn/zwgk/gysj/jjyxsj/202611/t20261127_7255759.htm",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T15:00:00+08:00"
+        },
+        {
+          "name": "大河财立方／东方财富｜数据与国家统计局解读",
+          "url": "https://finance.eastmoney.com/a/202611273941502257.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T09:31:00+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261127-oil-supply-risk",
+      "category": "negative",
+      "markets": [
+        "A股",
+        "美股"
+      ],
+      "topic": "能源与供应",
+      "publishedAt": "2026-11-27T12:56:00Z",
+      "eventAt": "2026-11-27T12:39:00Z",
+      "timeLabel": "11/27 北京时间20:39报价，路透20:56报道",
+      "title": "布伦特原油期货约96.60美元，供应担忧未退",
+      "summary": "路透报道布伦特原油期货在每桶96.60美元附近，供应不确定性若令高油价持续，航空和运输企业的成本可能上升。",
+      "highlights": [
+        "布伦特原油期货在每桶96.60美元附近"
+      ],
+      "analysis": "中东能源供应和运输受扰令市场关注原油是否能按期交付。油价维持高位通常会提高耗油行业成本，同时可能支撑部分原油生产企业的收入。",
+      "knowledge": {
+        "term": "供应冲击",
+        "explanation": "供应冲击指商品的生产或运输突然受到影响。短期买家难以换来源时，即使需求不变，价格也可能波动。",
+        "example": "假设一家工厂每周要买100桶燃料，原供应商受运输延误只能送来70桶，工厂为补齐缺口可能愿意接受更高报价。"
+      },
+      "watch": "关注主要产油国正式会议结果、实际原油出口和运输恢复情况。",
+      "caveat": "96.60美元是盘中期货报价。截至截点，产油国维持产量目标的说法仍来自媒体援引消息人士，正式决定待公布。",
+      "sources": [
+        {
+          "name": "路透／London South East｜布伦特盘中报价及供给风险",
+          "url": "https://www.lse.co.uk/news/oil-on-track-to-snap-three-week-losing-streak-over-supply-fears-o9pyrovrmbxiajs.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T12:56:00Z"
+        }
+      ]
+    },
+    {
+      "id": "20261127-cn-deposit-loan-interest-rules",
+      "category": "neutral",
+      "markets": [
+        "A股"
+      ],
+      "topic": "银行与利率规则",
+      "publishedAt": "2026-11-27T18:38:29+08:00",
+      "timeLabel": "11/27 18:38每日经济新闻报道，2027/3/21起施行（北京时间）",
+      "title": "央行公布人民币存贷款利率新规，明年3月生效",
+      "summary": "央行公布人民币存贷款利率新规，明年3月21日起贷款罚息由金融机构和借款人按规定协商，银行和借款企业的影响取决于合同条款。",
+      "highlights": [
+        "明年3月21日起贷款罚息由金融机构和借款人按规定协商"
+      ],
+      "analysis": "新规整合存贷款计息与结息规则，并取消央行对贷款罚息利率的具体区间。合同将约定罚息利率、计息方式和宽限期，仍须符合央行有关规定。",
+      "knowledge": {
+        "term": "贷款罚息",
+        "aliases": [
+          "罚息利率",
+          "罚息"
+        ],
+        "explanation": "贷款罚息是借款人未按合同约定还款时可能承担的额外利息，金额取决于逾期金额、天数和合同条款。",
+        "example": "假设一家企业有1万元贷款逾期，合同约定每逾期一天加收1元，逾期5天便多付5元。"
+      },
+      "watch": "留意生效后银行的新合同范本、实际罚息水平，以及对逾期客户还款的影响。",
+      "caveat": "发布日和施行日相隔约四个月，过渡期仍按旧规定执行，存量合同依照过渡安排处理。具体罚息变化要等合同落地后观察。",
+      "sources": [
+        {
+          "name": "新华财经｜人民银行答记者问及规定条文",
+          "url": "https://www.cnfin.com/yw-lb/detail/20261127/4501462_1.html",
+          "verification": "full_text"
+        },
+        {
+          "name": "每日经济新闻｜罚息规则及报道时间",
+          "url": "https://www.nbd.com.cn/articles/2026-11-27/4661414.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T18:38:29+08:00"
+        },
+        {
+          "name": "北京日报｜发布与施行日期",
+          "url": "https://news.bjd.com.cn/2026/11/27/12046299.shtml",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T19:41:00+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261127-us-goods-trade-advance",
+      "category": "neutral",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "美国贸易",
+      "publishedAt": "2026-11-27T08:30:00-05:00",
+      "timeLabel": "11/27 美东08:30公布，北京时间21:30",
+      "title": "美国10月货物贸易逆差初值扩大至1495亿美元",
+      "summary": "美国10月货物贸易逆差初值扩大至1495亿美元，进口增加快于出口，令市场关注外贸对经济增长的影响。",
+      "highlights": [
+        "货物贸易逆差初值扩大至1495亿美元"
+      ],
+      "analysis": "美国人口普查局估计，10月货物进口额较9月增加211亿美元，出口额增加67亿美元。进口增加可能反映需求、囤货或价格变化，初值无法单独确定背后的原因，也不含服务贸易。",
+      "knowledge": {
+        "term": "贸易逆差",
+        "aliases": [
+          "货物贸易逆差"
+        ],
+        "explanation": "当一个经济体的进口金额超过出口金额时，两者的差额称作贸易逆差。货物贸易逆差只统计商品。",
+        "example": "假设一国某月进口120亿元商品、出口100亿元商品，当月货物贸易逆差就是20亿元。"
+      },
+      "watch": "观察后续包含服务的完整贸易报告、商品价格与库存变化，再看季度GDP中的实际净出口。",
+      "caveat": "金额已做季节调整，未扣除价格变化，且为先行初值。单月变化无法确定整个季度经济增长的方向。",
+      "sources": [
+        {
+          "name": "美国人口普查局｜10月贸易与库存先行报告（PDF）",
+          "url": "https://www.census.gov/econ/indicators/2026/advance_report2610.pdf",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T08:30:00-05:00"
+        }
+      ]
+    },
+    {
+      "id": "20261127-tokyo-core-cpi",
+      "category": "neutral",
+      "markets": [
+        "A股",
+        "美股"
+      ],
+      "topic": "日本通胀与利率",
+      "publishedAt": "2026-11-27T03:18:00Z",
+      "timeLabel": "11/27 东京物价数据公布，路透北京时间11:18报道",
+      "title": "东京11月核心CPI同比升至2.9%",
+      "summary": "东京11月剔除生鲜食品后的CPI同比从2.6%升至2.9%，可能强化市场对日本央行加息的预期。",
+      "highlights": [
+        "CPI同比从2.6%升至2.9%",
+        "可能强化市场对日本央行加息的预期"
+      ],
+      "analysis": "东京核心CPI包含能源。若同时剔除生鲜和能源，涨幅反而由2.6%降至2.5%，说明不同统计口径给出的信号并不一致。日本利率预期变化可能通过日元和全球资金成本传到其他股市。",
+      "knowledge": {
+        "term": "核心CPI",
+        "explanation": "核心CPI会剔除指定的波动项目，帮助观察物价趋势。日本常用口径剔除生鲜食品，阅读数字时要看清是否同时剔除了能源。",
+        "example": "假设电费上涨、其他价格大致不变，只剔除生鲜食品的指数可能加快，而同时剔除能源的指数变化较小。"
+      },
+      "watch": "看日本全国物价、工资以及日本央行政策会议的正式表态。",
+      "caveat": "这组数据是东京都区部的初值。截至截点，日本央行尚未就下一次利率决定发布结果。",
+      "sources": [
+        {
+          "name": "日本总务省统计局｜东京都区部11月CPI初值（PDF）",
+          "url": "https://www.e-stat.go.jp/stat-search/file-download?fileKind=2&statInfId=000040525998",
+          "verification": "full_text"
+        },
+        {
+          "name": "路透／MarketScreener｜东京CPI的口径及前月对比",
+          "url": "https://uk.marketscreener.com/news/tokyo-core-inflation-at-16-month-high-bolsters-case-for-boj-hike-ce7851d9d88ff42d",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T03:18:00Z"
+        }
+      ]
+    },
+    {
+      "id": "20261127-ecb-president-nomination",
+      "category": "neutral",
+      "markets": [
+        "A股",
+        "美股"
+      ],
+      "topic": "欧洲央行人事",
+      "publishedAt": "2026-11-26T10:56:00-05:00",
+      "timeLabel": "11/26 美东10:56美联社稿发布，北京时间23:56",
+      "title": "欧洲理事会提名德科斯接任欧洲央行行长",
+      "summary": "欧洲理事会提名前西班牙央行行长德科斯接替拉加德，欧元和全球市场可能关注欧洲利率政策未来如何调整。",
+      "highlights": [
+        "欧洲理事会提名前西班牙央行行长德科斯"
+      ],
+      "analysis": "欧盟理事会建议任期自2027年2月8日开始，后续程序包括征询欧洲议会和欧洲央行管理委员会。行长会影响政策沟通，利率由管理委员会集体决定。",
+      "knowledge": {
+        "term": "欧洲央行管理委员会",
+        "aliases": [
+          "欧洲央行理事会"
+        ],
+        "explanation": "这个机构决定欧元区货币政策，由欧洲央行执行委员会成员和欧元区各国央行行长组成。",
+        "example": "假设新任行长认为通胀放缓、其他委员仍担心物价，利率要等集体决议才能确定。"
+      },
+      "watch": "看正式任命、上任时间，以及未来欧洲央行关于通胀与利率的政策声明。",
+      "caveat": "已核实提名与建议任期，正式任命与利率路径仍待确认。时间标注为美联社转载稿的发布时间，欧方声明首次上线的分钟未核实。",
+      "sources": [
+        {
+          "name": "欧洲理事会｜行长提名和任命程序",
+          "url": "https://www.consilium.europa.eu/es/press/press-releases/2026/11/26/european-council-puts-forward-pablo-hernandez-de-cos-as-next-president-of-the-european-central-bank/",
+          "verification": "full_text"
+        },
+        {
+          "name": "欧盟理事会｜行长任命建议（PDF）",
+          "url": "https://data.consilium.europa.eu/doc/document/ST-15530-2026-INIT/en/pdf",
+          "verification": "full_text"
+        },
+        {
+          "name": "美联社／Spectrum News｜提名与发布时间",
+          "url": "https://ny1.com/nyc/all-boroughs/ap-top-news/2026/11/26/leaders-choose-spains-former-central-bank-head-as-next-european-central-bank-president",
+          "verification": "full_text",
+          "publishedAt": "2026-11-26T10:56:00-05:00"
+        }
+      ]
+    }
+  ]
+}
