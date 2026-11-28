@@ -1,0 +1,325 @@
+{
+  "date": "2026-11-28",
+  "windowStart": "2026-11-27T22:00:00+08:00",
+  "windowEnd": "2026-11-28T22:00:00+08:00",
+  "backfilled": false,
+  "outlook": "美股节后由科技股带动反弹，但美债收益率上升和法国评级展望转弱，给乐观情绪留下一些变数。",
+  "coverageNote": "本期覆盖北京时间11/27 22:00之后至11/28 22:00。A股11/28周六休市。美股行情为美东11/27感恩节后的提前收盘，发生在北京时间11/28 02:00。黑五网购全天终值、OPEC+下一季度产量安排和下周A股解禁后的实际卖出量仍待核实。",
+  "featuredArticleIds": [
+    "20261128-us-post-thanksgiving-close",
+    "20261128-us-treasury-yields",
+    "20261128-us-black-friday-online"
+  ],
+  "items": [
+    {
+      "id": "20261128-us-post-thanksgiving-close",
+      "category": "positive",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "美股收盘",
+      "publishedAt": "2026-11-27T18:45:51Z",
+      "eventAt": "2026-11-27T13:00:00-05:00",
+      "timeLabel": "11/27 美东13:00提前收盘，对应北京时间11/28 02:00",
+      "title": "美股节后提前收盘，纳指涨2.3%",
+      "summary": "感恩节后首个交易日，纳指涨2.3%、标普500涨1.6%、道指涨1.2%，科技股带动美股收盘走强。",
+      "highlights": [
+        "纳指涨2.3%、标普500涨1.6%、道指涨1.2%"
+      ],
+      "analysis": "美联社报道科技板块领涨，博通涨3.8%。标普500当周累计涨5.6%。美国科技股走强也可能改善A股同类板块的情绪，两地公司的盈利和交易条件仍各有差别。",
+      "knowledge": {
+        "term": "指数权重",
+        "explanation": "指数权重是成分股在计算指数时所占的比重，权重越高，股价变动对指数的影响越大。",
+        "example": "假设某股票在指数里占10%的权重，当天涨5%，其他股票不变，指数大约会被推高0.5%。"
+      },
+      "watch": "观察下一完整交易日的成交、涨幅覆盖面和科技板块是否延续强势。",
+      "caveat": "这是美东周五缩短交易日的正式收盘数据，归入北京时间周六简报。一次反弹无法确定下周方向，也无法预测A股开盘。",
+      "sources": [
+        {
+          "name": "美联社｜11月27日三大指数收盘数据",
+          "url": "https://apnews.com/article/04dab6079cf7f3dfe7285a3cc1f240a2",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T18:45:51Z"
+        },
+        {
+          "name": "美联社／Times Union｜科技股表现与周涨幅",
+          "url": "https://www.timesunion.com/news/world/article/asian-shares-mostly-rise-ahead-of-wall-street-s-22551852.php",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T19:59:51Z",
+          "updatedAt": "2026-11-27T20:01:18Z"
+        },
+        {
+          "name": "纽约证券交易所｜节后提前收盘时刻",
+          "url": "https://www.nyse.com/trade/hours-calendars",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261128-us-treasury-yields",
+      "category": "negative",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "美国利率与估值",
+      "publishedAt": "2026-11-27T19:59:51Z",
+      "timeLabel": "11/27 美国财政部日度数据，美联社转载稿北京时间11/28 04:01更新",
+      "title": "10年期美债收益率升至4.94%",
+      "summary": "美国10年期国债收益率从4.85%升至4.94%，若高位延续，以未来盈利支撑估值的股票可能承压。",
+      "highlights": [
+        "国债收益率从4.85%升至4.94%",
+        "若高位延续"
+      ],
+      "analysis": "美国财政部的日度曲线显示，2年期收益率也从4.61%升至4.69%。当较安全的债券提供更高收益，投资者可能要求风险较大的股票提供更高回报，因此会降低对同样一笔未来利润的出价。",
+      "knowledge": {
+        "term": "基点",
+        "explanation": "1个基点等于0.01个百分点。它常用于描述利率的微小变动，比较的是两项百分数的差。",
+        "example": "假设一个债券的收益率从4.85%升至4.94%，就上升了0.09个百分点，也就是9个基点。"
+      },
+      "watch": "看美债收益率在下个完整交易日能否维持，以及后续就业和物价数据是否改变利率预期。",
+      "caveat": "4.94%是10年期国债收益率，美联储政策利率由另外的议息决定。收益率单日上升也无法证明股价一定下跌。",
+      "sources": [
+        {
+          "name": "美国财政部｜11月25日和27日的国债收益率曲线",
+          "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611",
+          "verification": "full_text"
+        },
+        {
+          "name": "美联社／Times Union｜10年期美债收益率变化",
+          "url": "https://www.timesunion.com/news/world/article/asian-shares-mostly-rise-ahead-of-wall-street-s-22551852.php",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T19:59:51Z",
+          "updatedAt": "2026-11-27T20:01:18Z"
+        }
+      ]
+    },
+    {
+      "id": "20261128-us-black-friday-online",
+      "category": "neutral",
+      "markets": [
+        "美股"
+      ],
+      "topic": "美国消费",
+      "publishedAt": "2026-11-27T19:06:00-05:00",
+      "eventAt": "2026-11-27T18:30:00-05:00",
+      "timeLabel": "11/27 美东18:30统计、19:06报道，对应北京时间11/28 07:30与08:06",
+      "title": "黑五美国网购额晚间同比增12.8%，全天仍为预估",
+      "summary": "Adobe统计美国黑五网购额截至美东18:30达97亿美元、同比增12.8%，对电商销售是积极信号，利润还取决于折扣和成本。",
+      "highlights": [
+        "97亿美元、同比增12.8%"
+      ],
+      "analysis": "Adobe当时预计全天网购额为130亿至134亿美元。晚间的统计说明网购金额增长较快，但折扣扩大时，收入和利润的变化可能不同。",
+      "knowledge": {
+        "term": "名义销售额",
+        "explanation": "名义销售额按实际成交的价格加总，价格和销量都会改变这个数字。",
+        "example": "假设一家店去年卖100件、每件10元，今年仍卖100件、每件11元，销售额增长10%，销量持平。"
+      },
+      "watch": "看Adobe公布的全天终值、线上与线下是否同向，以及零售商财报里的利润率。",
+      "caveat": "97亿美元是Adobe统计口径下的时点数据，130亿至134亿美元为当时的全天预估。截稿时尚未核实终值，数字也无法代表全美线下销售。",
+      "sources": [
+        {
+          "name": "路透／StreetInsider｜黑五时点销售与全天预估",
+          "url": "https://www.streetinsider.com/Reuters/US%2BBlack%2BFriday%2Bonline%2Bsales%2Bto%2Bcross%2B%2413%2Bbillion%2C%2BAdobe%2Bsays/27409474.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T19:06:00-05:00"
+        },
+        {
+          "name": "路透／CNA｜Adobe与其他平台的统计口径",
+          "url": "https://www.channelnewsasia.com/business/us-black-friday-online-sales-cross-13-billion-adobe-says-6588836",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261128-france-sp-outlook",
+      "category": "negative",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "法国财政与信用",
+      "publishedAt": "2026-11-27T16:11:00-05:00",
+      "timeLabel": "标普发布列表标注美东11/27 16:11，对应北京时间11/28 05:11",
+      "title": "标普维持法国A+评级，展望调至负面",
+      "summary": "标普维持法国长期主权评级A+、将展望从稳定调为负面，可能提高市场对欧洲政府借款风险的关注。",
+      "highlights": [
+        "长期主权评级A+",
+        "展望从稳定调为负面"
+      ],
+      "analysis": "标普认为，法国缩减财政赤字面临障碍，经济增长偏弱也可能让债务负担更难缓解。投资者如果要求持有法国债券获得更高回报，法国国债收益率相对德国国债的差距可能扩大。",
+      "knowledge": {
+        "term": "评级展望",
+        "aliases": [
+          "信用评级展望"
+        ],
+        "explanation": "评级展望描述信用评级未来可能变化的方向。评级维持原级别而展望转负，意味着评级机构认为下调风险有所上升。",
+        "example": "假设一家公司仍获A级，但其展望由稳定转为负面，后续若偿债能力恶化，评级机构可能下调评级。"
+      },
+      "watch": "跟踪法国预算案进展，以及法国和德国同期限国债收益率的差距。",
+      "caveat": "本次调整的是展望，法国长期评级仍为A+。评级机构对赤字和经济增长的看法属于预测。",
+      "sources": [
+        {
+          "name": "标普全球评级｜法国评级公告索引及发布时间",
+          "url": "https://www.spglobal.com/ratings/en/regulatory/press-releases",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T16:11:00-05:00"
+        },
+        {
+          "name": "标普全球评级｜法国展望调整公告（可见标题）",
+          "url": "https://www.spglobal.com/ratings/en/regulatory/article/-/view/type/HTML/id/3668694",
+          "verification": "search_excerpt"
+        },
+        {
+          "name": "法新社／Boursorama｜财政赤字和评级背景",
+          "url": "https://www.boursorama.com/bourse/actualites-amp/dette-s-p-maintient-la-note-de-la-france-mais-menace-de-la-degrader-af56fb175f680c54051c9a57983e65f9",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261128-brent-weekly-settlement",
+      "category": "neutral",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "原油与供应",
+      "publishedAt": "2026-11-27T20:12:39Z",
+      "timeLabel": "路透结算报道于北京时间11/28 04:12发布",
+      "title": "布伦特原油周五跌至95.44美元，全周仍涨约3%",
+      "summary": "布伦特原油期货周五跌至每桶95.44美元、全周仍涨约3%，能源股和用油企业需继续关注供给风险。",
+      "highlights": [
+        "每桶95.44美元、全周仍涨约3%"
+      ],
+      "analysis": "周五价格下跌和全周上涨可以同时发生，因为周度涨幅先计入此前几天的变动。中东供应的不确定性仍可能推高耗油行业的支出，也可能支撑部分原油生产商收入。",
+      "knowledge": {
+        "term": "期货结算价",
+        "aliases": [
+          "结算价"
+        ],
+        "explanation": "期货结算价是交易所用于每日计算期货盈亏的参考价格，具体计算规则因交易所或合约而异。",
+        "example": "假设某合约昨天的结算价为每桶96美元，今天为95美元，一份以100桶为单位的多头合约当天结算亏损100美元，未计费用。"
+      },
+      "watch": "关注11月29日OPEC+会议公报、此后的实际出口和原油库存变化。",
+      "caveat": "周度和单日表现均为已经结束的交易数据。关于OPEC+可能维持下一季度产量目标的消息来自路透援引的知情人士，正式决定仍待会议公布。",
+      "sources": [
+        {
+          "name": "路透／Euronext｜布伦特结算、周涨幅与供给背景",
+          "url": "https://live.euronext.com/en/financial-news/oil-notches-first-weekly-gain-november-supply-fears",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T20:12:39Z"
+        },
+        {
+          "name": "OPEC｜11月29日会议日程",
+          "url": "https://www.opec.org/pr-detail/605-7-june-2026.html",
+          "verification": "full_text"
+        }
+      ]
+    },
+    {
+      "id": "20261128-cn-share-unlock-estimates",
+      "category": "neutral",
+      "markets": [
+        "A股"
+      ],
+      "topic": "A股解禁安排",
+      "publishedAt": "2026-11-28T19:06:00+08:00",
+      "timeLabel": "11/28 19:06证券时报测算经东方财富发布（北京时间）",
+      "title": "下周32家公司有限售股解禁，按现价合计约433亿元",
+      "summary": "证券时报统计下周32家A股公司拟解禁股份按现价约值433亿元，新增可流通股可能影响个别公司的供求。",
+      "highlights": [
+        "32家A股公司拟解禁股份按现价约值433亿元"
+      ],
+      "analysis": "其中中国铀业对应解禁市值约201亿元，占统计总值接近一半。这类压力若出现，往往集中在相关个股，影响还取决于股东是否卖出以及实际成交量。",
+      "knowledge": {
+        "term": "限售股解禁",
+        "aliases": [
+          "限售股份解禁"
+        ],
+        "explanation": "限售股持有人须等限制期结束，才能在满足相关规则时卖出。解禁因此增加可能流通的股份。",
+        "example": "假设一家公司的100万股本周解除限售，股东最终卖出10万股，卖出量就只占解禁量的十分之一。"
+      },
+      "watch": "留意各公司正式上市流通公告、股东减持披露和解禁日前后的成交变化。",
+      "caveat": "433亿元按统计时的股价估算，股价变化会影响市值。解除限售仅表示具备流通条件，实际卖出量要另行观察。",
+      "sources": [
+        {
+          "name": "证券时报·数据宝／东方财富｜下周解禁安排与市值测算",
+          "url": "https://finance.eastmoney.com/a/202611283942386251.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-28T19:06:00+08:00"
+        }
+      ]
+    },
+    {
+      "id": "20261128-us-ai-hardware-litigation",
+      "category": "neutral",
+      "markets": [
+        "美股",
+        "A股"
+      ],
+      "topic": "科技公司诉讼",
+      "publishedAt": "2026-11-27T19:05:00Z",
+      "timeLabel": "路透稿北京时间11/28 03:05发布、06:59更新",
+      "title": "OpenAI反诉苹果，争议涉及AI硬件供应商",
+      "summary": "OpenAI对苹果提起反诉，指控涉及商业秘密和硬件供应商合作，可能让市场关注两家公司AI设备项目的后续安排。",
+      "highlights": [
+        "OpenAI对苹果提起反诉"
+      ],
+      "analysis": "路透报道，这些反诉请求出现在苹果此前提起的案件中，苹果否认了有关指控。诉讼可能增加双方的法律成本，也使相关供应商合作安排受到关注。",
+      "knowledge": {
+        "term": "诉讼风险",
+        "explanation": "诉讼风险指纠纷可能通过律师费、赔偿或法院临时限制等方式改变公司的成本、现金流或经营计划。",
+        "example": "假设两家企业对某项设计发生诉讼，如果法院发出临时禁令，相关产品的上市可能推迟，具体影响取决于禁令范围。"
+      },
+      "watch": "看法院的公开裁定，以及两家公司和相关供应商是否披露实际业务变化。",
+      "caveat": "已核实的是反诉及回应，指控仍待法院审理。截至截稿，赔偿、禁令或合作取消均未核实。",
+      "sources": [
+        {
+          "name": "路透／MarketScreener｜反诉、苹果回应及前案背景",
+          "url": "https://uk.marketscreener.com/news/openai-countersues-apple-for-stealing-trade-secrets-ce7851d9d18bf727",
+          "verification": "full_text",
+          "publishedAt": "2026-11-27T19:05:00Z",
+          "updatedAt": "2026-11-27T22:59:00Z"
+        }
+      ]
+    },
+    {
+      "id": "20261128-cn-yuan-night-close",
+      "category": "neutral",
+      "markets": [
+        "A股"
+      ],
+      "topic": "人民币汇率",
+      "publishedAt": "2026-11-28T06:13:41+08:00",
+      "eventAt": "2026-11-28T03:00:00+08:00",
+      "timeLabel": "11/28 03:00在岸夜盘收报，每日经济新闻06:13报道（北京时间）",
+      "title": "在岸人民币夜盘升至1美元兑6.6541元",
+      "summary": "在岸人民币兑美元夜盘收报6.6541，较前一夜盘走强68点，若继续走强，可能降低部分进口企业以人民币计的付款成本。",
+      "highlights": [
+        "夜盘收报6.6541",
+        "若继续走强"
+      ],
+      "analysis": "汇率报价6.6541表示兑换1美元约需6.6541元人民币。人民币升值时，同额美元货款折算的人民币通常变少，美元收入折算的人民币也会变少。",
+      "knowledge": {
+        "term": "在岸人民币",
+        "aliases": [
+          "CNY"
+        ],
+        "explanation": "在岸人民币汇率指中国内地外汇市场的人民币报价。以美元兑人民币为例，数字变小表示同一美元可兑换的人民币变少。",
+        "example": "假设一份进口账单为100美元，汇率从6.70变成6.65，折算的支出就从670元变成665元，未计交易费用。"
+      },
+      "watch": "观察后续白天交易、离岸人民币和美元走势是否与这一夜盘信号一致。",
+      "caveat": "这是前一交易日延续至北京时间周六凌晨的夜盘报价。个别企业的影响还取决于合同结算币种和是否已提前锁定汇率。",
+      "sources": [
+        {
+          "name": "每日经济新闻｜在岸夜盘收报与涨跌幅",
+          "url": "https://www.nbd.com.cn/articles/2026-11-28/4661768.html",
+          "verification": "full_text",
+          "publishedAt": "2026-11-28T06:13:41+08:00"
+        }
+      ]
+    }
+  ]
+}
